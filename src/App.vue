@@ -1,36 +1,25 @@
 <template>
-  <div :style="{paddingTop: hb}">
-    <div id="scroll" ref="scroll" class="scroll">
-      <div style="text-align: center">{{hb}}</div>
-      <div style="text-align: center">{{url}}</div>
-      <router-view/>
-    </div>
-    <tab-bar></tab-bar>
+  <div class="nav-bar"></div>
+  <div id="scroll" ref="scroll" class="scroll">
+    <router-view/>
   </div>
+  <tab-bar></tab-bar>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
 import tabBar from '@/components/tabBar'
-// import navBar from '@/components/navBar'
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
 
 export default {
   components: {
     tabBar,
-    // navBar
   },
   setup() {
-    const route = useRoute()
-    const store = useStore()
-
-    onMounted(() => {
-      window.vueJsGetLocation = (function(){console.log("vueJsGetLocation未绑定")})
-    })
-
-    return { }
+    const setHeight = () => {
+      const el = document.getElementById("scroll")
+      el.style.height=document.documentElement.clientHeight - 95 + 'px'
+    }
+    return { setHeight }
   },
   mounted() {
     this.$nextTick(() => {
@@ -38,10 +27,10 @@ export default {
         scrollbar: false,
       })
     })
-    document.getElementById('scroll').style.height=document.documentElement.clientHeight - 55 + 'px'
+    this.setHeight()
     window.onresize = () => {
       return (() => {
-        document.getElementById('scroll').style.height=document.documentElement.clientHeight - 55 + 'px'
+        this.setHeight()
       })()
     }
   },
@@ -51,9 +40,12 @@ export default {
 <style lang="scss">
 body {
   margin: 0;
-  background-color: #f56c6c;
+  background-color: #333;
 }
-#app {
-
+.nav-bar {
+  width: 100%;
+  height: 40px;
+  position: fixed;
+  background-color: #333;
 }
 </style>

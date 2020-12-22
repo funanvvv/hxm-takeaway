@@ -13,23 +13,36 @@
           <el-button icon="el-icon-search"></el-button>
         </template>
       </el-input>
+      <search-tags></search-tags>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
+<script>
+import { defineComponent } from 'vue'
+import searchTags from '@/components/home/searchTags.vue'
 export default defineComponent({
-  name: 'Home',
   components: {
-
+    searchTags
   },
-});
+  setup() {
+    return { }
+  },
+})
+
+window.onscroll = function() {
+  const dom = document.getElementsByClassName('el-input')[0]
+  const val = dom.getBoundingClientRect().top - 40
+  if(val <= 10) {
+    dom.style.setProperty('border-top-left-radius', val * 3 + 'px')
+    dom.style.setProperty('border-top-right-radius', val * 3 + 'px')
+  }
+}
 </script>
 
 <style scoped lang="scss">
 .home {
+  padding-top: 40px;
   .top-wrap {
     padding: 8px 10px;
     color: white;
@@ -37,12 +50,16 @@ export default defineComponent({
   .main-wrap {
     background: #fff;
     height: 1888px;
-    border-radius: 15px 15px 0 0;
+    border-radius: 25px 25px 0 0;
     .input-with-search {
+      transition: .3s;
       position: sticky;
-      top: 0;
+      top: 40px;
       box-sizing: border-box;
       padding: 10px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      background: #fff;
     }
   }
 }
