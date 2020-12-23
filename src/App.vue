@@ -47,5 +47,7 @@ body {
   height: 40px;
   position: fixed;
   background-color: #333;
+  transition: .3s;
+  z-index: 99;
 }
 </style>

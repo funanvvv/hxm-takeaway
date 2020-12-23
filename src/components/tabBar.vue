@@ -1,31 +1,31 @@
 <template>
   <div class="tab-bar">
-    <router-link to="/home">
-      <div :class="[ path == '/home' ? 'main-page-selected' : 'main-page']">外卖</div>
-    </router-link>
-    <router-link to="/order">
-      <div :class="[ path == '/order' ? 'order-page-selected' : 'order-page']">订单</div>
-    </router-link>
-    <router-link to="/info">
-      <div :class="[ path == '/info' ? 'info-page-selected' : 'info-page']">主页</div>
-    </router-link>
+    <div :class="[ path == '/home' ? 'main-page-selected' : 'main-page']" @click="goto('/home')">外卖</div>
+    <div :class="[ path == '/order' ? 'order-page-selected' : 'order-page']" @click="goto('/order')">订单</div>
+    <div :class="[ path == '/info' ? 'info-page-selected' : 'info-page']" @click="goto('/info')">主页</div>
   </div>
 </template>
 
 <script>
 import { watch, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 export default {
   setup() {
     const path = ref(undefined)
     const route = useRoute()
-    // const router = useRouter()
+    const router = useRouter()
+
+    const goto = (e) => {
+      router.push({
+        path: e
+      })
+    }
 
     watch(route, () => {
       path.value = route.path
     })
 
-    return {path}
+    return { path, goto }
   }
 }
 </script>

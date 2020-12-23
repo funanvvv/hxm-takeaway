@@ -44,13 +44,13 @@ export default {
 
 <style scoped lang="scss">
 .tags-wrap {
-  padding: 0 10px;
+  padding: 0 15px;
   display: flex;
   overflow: hidden;
   flex-wrap: wrap;
   .tag {
     padding: 3px 10px;
-    font-size: 12px;
+    font-size: 10px;
     border-radius: 11px;
     margin-bottom: 5px;
     &.tag-normal {
@@ -58,7 +58,9 @@ export default {
       color: #333;
     }
     &.tag-hot {
-      background-color: rgb(255, 238, 215);
+      padding-left: 20px;
+      background: rgb(255, 238, 215) url('../../assets/hot.png') no-repeat 7% 50%;
+      background-size: 13px;
       color: rgb(255, 96, 57);
     }
     &:not(:last-child) {

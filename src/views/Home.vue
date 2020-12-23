@@ -14,21 +14,27 @@
         </template>
       </el-input>
       <search-tags></search-tags>
+      <app-carousel></app-carousel>
+      <div class="title">附近推荐</div>
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { ref } from 'vue'
+import 'swiper/css/swiper.css'
 import searchTags from '@/components/home/searchTags.vue'
-export default defineComponent({
+import appCarousel from '@/components/home/appCarousel.vue'
+export default {
   components: {
-    searchTags
+    searchTags,
+    appCarousel
   },
   setup() {
-    return { }
+    const carouselImgs = ref(['http://test.funanvvv.cn/bing/niu.jpg', 'http://test.funanvvv.cn/bing/yu.jpg'])
+    return { carouselImgs }
   },
-})
+}
 
 window.onscroll = function() {
   const dom = document.getElementsByClassName('el-input')[0]
@@ -36,6 +42,11 @@ window.onscroll = function() {
   if(val <= 10) {
     dom.style.setProperty('border-top-left-radius', val * 3 + 'px')
     dom.style.setProperty('border-top-right-radius', val * 3 + 'px')
+  }
+  if(val == 0) {
+    document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', 'white')
+  } else {
+    document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#333')
   }
 }
 </script>
@@ -60,6 +71,13 @@ window.onscroll = function() {
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
       background: #fff;
+      z-index: 99;
+    }
+    .title {
+      padding-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      padding: 10px 20px 0;
     }
   }
 }
