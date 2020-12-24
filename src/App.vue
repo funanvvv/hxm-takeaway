@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import '@/utils/js/scroll.js'
 import BScroll from 'better-scroll'
 import tabBar from '@/components/tabBar'
 
@@ -38,6 +39,14 @@ export default {
 </script>
 
 <style lang="scss">
+* {
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
 body {
   margin: 0;
   background-color: #333;
@@ -49,5 +58,9 @@ body {
   background-color: #333;
   transition: .3s;
   z-index: 99;
+}
+.bottom-seat {
+  height: 80px;
+  background: #f7f7f7;
 }
 </style>

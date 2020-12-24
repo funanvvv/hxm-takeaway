@@ -84,7 +84,7 @@ export default {
 <style lang="scss">
 .swiper-container {
   height: 140px;
-  padding: 15px 0;
+  padding: 10px 0;
   .swiper-slide {
     display: grid;
     grid-template: 1fr 1fr / 1fr 1fr 1fr 1fr 1fr;
