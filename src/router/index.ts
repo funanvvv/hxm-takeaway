@@ -1,9 +1,13 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
-  {path: '/home',name: 'Home',component: () => import(/* webpackChunkName: "home" */ '../views/home.vue')},
-  {path: '/info',name: 'Info',component: () => import(/* webpackChunkName: "info" */ '../views/info.vue')},
-  {path: '/order',name: 'Order',component: () => import(/* webpackChunkName: "order" */ '../views/order.vue')},
+  {path: '/home',name: 'Home',meta: {tabBar: true},
+  component: () => import(/* webpackChunkName: "home" */ '../views/home.vue')},
+  {path: '/info',name: 'Info',meta: {tabBar: true},
+  component: () => import(/* webpackChunkName: "info" */ '../views/info.vue')},
+  {path: '/order',name: 'Order',meta: {tabBar: true},
+  component: () => import(/* webpackChunkName: "order" */ '../views/order.vue')},
+  {path: '/search',name: 'Search',component: () => import(/* webpackChunkName: "search" */ '../views/search.vue')},
 ]
 
 const router = createRouter({

@@ -1,13 +1,12 @@
 <template>
   <div class="home">
-    <div class="top-wrap">
-      浙江工商大学-花小猫外卖
-    </div>
+    <top-status></top-status>
     <div class="main-wrap">
       <el-input
         placeholder="请输入内容"
         v-model="input"
         class="input-with-search"
+        @focus="gotoSearch"
       >
         <template #append>
           <el-button icon="el-icon-search"></el-button>
@@ -23,7 +22,9 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import 'swiper/css/swiper.css'
+import topStatus from '@/components/home/topStatus.vue'
 import searchTags from '@/components/home/searchTags.vue'
 import appCarousel from '@/components/home/appCarousel.vue'
 import shopList from '@/components/home/shopList.vue'
@@ -32,9 +33,16 @@ export default {
     searchTags,
     appCarousel,
     shopList,
+    topStatus,
   },
   setup() {
-    return { }
+    const router = useRouter()
+    const gotoSearch = () => {
+      router.push({
+        path: '/search'
+      })
+    }
+    return { gotoSearch }
   },
 }
 </script>
@@ -42,10 +50,6 @@ export default {
 <style scoped lang="scss">
 .home {
   padding-top: 40px;
-  .top-wrap {
-    padding: 8px 10px;
-    color: white;
-  }
   .main-wrap {
     background: #f7f7f7;
     border-radius: 25px 25px 0 0;

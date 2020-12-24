@@ -3,7 +3,7 @@
   <div id="scroll" ref="scroll" class="scroll">
     <router-view/>
   </div>
-  <tab-bar></tab-bar>
+  <tab-bar v-show="this.$route.meta.tabBar"></tab-bar>
 </template>
 
 <script>
@@ -33,6 +33,16 @@ export default {
       return (() => {
         this.setHeight()
       })()
+    }
+  },
+  watch:{
+    $route(to,from){
+      console.log(to.path)
+      if(to.path == '/search') {
+        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fff')
+      } else {
+        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#333')
+      }
     }
   },
 }
