@@ -21,13 +21,13 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import 'swiper/css/swiper.css'
 import topStatus from '@/components/home/topStatus.vue'
 import searchTags from '@/components/home/searchTags.vue'
 import appCarousel from '@/components/home/appCarousel.vue'
 import shopList from '@/components/home/shopList.vue'
+import { onMounted } from 'vue'
 export default {
   components: {
     searchTags,
@@ -42,6 +42,9 @@ export default {
         path: '/search'
       })
     }
+    onMounted(() => {
+      return
+    })
     return { gotoSearch }
   },
 }

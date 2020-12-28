@@ -14,4 +14,12 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script type="text/javascript" src="https://js.cdn.aliyun.dcloud.net.cn/dev/uni-app/uni.webview.1.5.2.js"></script>
+  <script>
+    window.navigate = (e) => {
+      uni.navigateTo({
+        url: '/pages/index/index?url=' + e
+      }) 
+    }
+  </script>
 </html>

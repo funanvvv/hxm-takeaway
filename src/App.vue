@@ -36,8 +36,7 @@ export default {
     }
   },
   watch:{
-    $route(to,from){
-      console.log(to.path)
+    $route(to){
       if(to.path == '/search') {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fff')
       } else {
@@ -49,6 +48,7 @@ export default {
 </script>
 
 <style lang="scss">
+//禁用长按选中文本
 * {
   -webkit-touch-callout:none;
   -webkit-user-select:none;
@@ -59,7 +59,7 @@ export default {
 }
 body {
   margin: 0;
-  background-color: #333;
+  background: #333;
 }
 .nav-bar {
   width: 100%;
