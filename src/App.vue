@@ -1,5 +1,5 @@
 <template>
-  <div class="nav-bar"></div>
+  <nav-bar></nav-bar>
   <div id="scroll" ref="scroll" class="scroll">
     <router-view/>
   </div>
@@ -10,11 +10,14 @@
 import '@/utils/js/scroll.js'
 import BScroll from 'better-scroll'
 import tabBar from '@/components/tabBar'
+import navBar from '@/components/navBar'
 
 export default {
   components: {
     tabBar,
+    navBar,
   },
+  
   setup() {
     const setHeight = () => {
       const el = document.getElementById("scroll")
@@ -26,6 +29,7 @@ export default {
     this.$nextTick(() => {
       this.scroll = new BScroll(this.$refs.scroll, {
         scrollbar: false,
+        pullDownRefresh: true,
       })
     })
     this.setHeight()
@@ -33,15 +37,6 @@ export default {
       return (() => {
         this.setHeight()
       })()
-    }
-  },
-  watch:{
-    $route(to){
-      if(to.path == '/search') {
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fff')
-      } else {
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#333')
-      }
     }
   },
 }
@@ -61,13 +56,11 @@ body {
   margin: 0;
   background: #333;
 }
-.nav-bar {
-  width: 100%;
-  height: 40px;
-  position: fixed;
-  background-color: #333;
-  transition: .3s;
-  z-index: 99;
+.scroll {
+  padding-top: 40px;
+}
+.container {
+  min-height: calc(100% + 55px);
 }
 .bottom-seat {
   height: 80px;

@@ -4,7 +4,8 @@ import router from './router'
 import store from './store'
 import {
   ElInput,
-  ElButton
+  ElButton,
+  ElAvatar
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 import { 
@@ -17,6 +18,6 @@ import {
 createApp(App)
   .use(store)
   .use(router)
-  .component(ElInput.name, ElInput).component(ElButton.name, ElButton)
+  .component(ElInput.name, ElInput).component(ElButton.name, ElButton).component(ElAvatar.name, ElAvatar)
   .use(DropdownMenu).use(DropdownItem).use(VanImage).use(Icon)
   .mount('#app')

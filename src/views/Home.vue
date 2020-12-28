@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home-page">
     <top-status></top-status>
     <div class="main-wrap">
       <el-input
@@ -51,8 +51,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.home {
-  padding-top: 40px;
+.home-page {
   .main-wrap {
     background: #f7f7f7;
     border-radius: 25px 25px 0 0;
@@ -71,7 +70,7 @@ export default {
 }
 </style>
 <style lang="scss">
-.home {
+.home-page {
   .input-with-search {
     transition: .3s;
     .el-input__inner {

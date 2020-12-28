@@ -85,7 +85,6 @@ export default {
       { text: '好评排序', value: 'b' },
       { text: '销量排序', value: 'c' },
     ];
-
     return {
       state,
       option1,

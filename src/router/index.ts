@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
+  {path: '/',redirect: {name: 'Home'}},
   {path: '/home',name: 'Home',meta: {tabBar: true},
   component: () => import(/* webpackChunkName: "home" */ '../views/home.vue')},
   {path: '/info',name: 'Info',meta: {tabBar: true},
