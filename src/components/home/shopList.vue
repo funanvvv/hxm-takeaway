@@ -6,7 +6,7 @@
       <van-dropdown-item v-model="state.value2" :options="option2" />
     </van-dropdown-menu>
     <div class="list">
-      <div class="list-item" v-for="(item, index) in list" :key="index">
+      <div class="list-item" v-for="(item, index) in list" :key="index" @click="gotoShop(item)">
         <van-image
           width="4rem"
           height="4rem"
@@ -36,8 +36,10 @@
 
 <script>
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
   setup() {
+    const router = useRouter()
     const list = ref([{
       avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/9e7c3d3b5c5945da69ca1129d76a2572.jpeg',
       title: '诸葛掌柜焖汁鸡(高沙店)',
@@ -71,6 +73,15 @@ export default {
       expressFee: 0,
       describe: '大刀牛肉面味道很正宗'
     }])
+    const gotoShop = (e) => {
+      e = JSON.stringify(e)
+      router.push({
+        path: '/shop',
+        query: {
+          shop: e
+        }
+      })
+    }
     const state = reactive({
       value1: 0,
       value2: 'a',
@@ -90,6 +101,7 @@ export default {
       option1,
       option2,
       list,
+      gotoShop,
     };
   }
 }

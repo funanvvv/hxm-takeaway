@@ -1,6 +1,6 @@
 <template>
   <nav-bar></nav-bar>
-  <div id="scroll" ref="scroll" class="scroll">
+  <div id="scroll" class="scroll">
     <router-view/>
   </div>
   <tab-bar v-show="this.$route.meta.tabBar"></tab-bar>
@@ -8,7 +8,6 @@
 
 <script>
 import '@/utils/js/scroll.js'
-import BScroll from 'better-scroll'
 import tabBar from '@/components/tabBar'
 import navBar from '@/components/navBar'
 
@@ -17,7 +16,6 @@ export default {
     tabBar,
     navBar,
   },
-  
   setup() {
     const setHeight = () => {
       const el = document.getElementById("scroll")
@@ -26,12 +24,6 @@ export default {
     return { setHeight }
   },
   mounted() {
-    this.$nextTick(() => {
-      this.scroll = new BScroll(this.$refs.scroll, {
-        scrollbar: false,
-        pullDownRefresh: true,
-      })
-    })
     this.setHeight()
     window.onresize = () => {
       return (() => {

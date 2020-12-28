@@ -9,6 +9,8 @@ const routes: Array<RouteRecordRaw> = [
   {path: '/order',name: 'Order',meta: {tabBar: true},
   component: () => import(/* webpackChunkName: "order" */ '../views/order.vue')},
   {path: '/search',name: 'Search',component: () => import(/* webpackChunkName: "search" */ '../views/search.vue')},
+  {path: '/shop',name: 'Shop',component: () => import(/* webpackChunkName: "shop" */ '../views/shop.vue')},
+  
 ]
 
 const router = createRouter({

@@ -1,6 +1,7 @@
 <template>
   <div class="home-page">
     <top-status></top-status>
+    <van-pull-refresh @refresh="onRefresh">
     <div class="main-wrap">
       <el-input
         placeholder="请输入内容"
@@ -16,6 +17,7 @@
       <app-carousel></app-carousel>
       <shop-list></shop-list>
     </div>
+    </van-pull-refresh>
     <div class="bottom-seat"></div>
   </div>
 </template>

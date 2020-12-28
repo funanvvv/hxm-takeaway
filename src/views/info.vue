@@ -42,7 +42,7 @@ export default {
       & > div {
         &:first-child {
           font-size: 18px;
-          font-weight: bold;
+          font-weight: 800;
           .basic-info-icon {
             float: right;
             font-size: 25px;

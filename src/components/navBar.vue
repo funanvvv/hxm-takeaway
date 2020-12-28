@@ -10,8 +10,10 @@ export default {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fff')
       } else if(to.path == '/info') {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#f7f7f7')
+        document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '0s')
       } else {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#333')
+        document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '.3s')
       }
     }
   },
