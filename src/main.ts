@@ -13,11 +13,14 @@ import {
   DropdownItem,
   Image as VanImage,
   Icon, PullRefresh,
+  Tab, Tabs, Sticky,
+  Sidebar, SidebarItem,
 } from 'vant';
 
 createApp(App)
   .use(store)
   .use(router)
   .component(ElInput.name, ElInput).component(ElButton.name, ElButton).component(ElAvatar.name, ElAvatar)
-  .use(DropdownMenu).use(DropdownItem).use(VanImage).use(Icon).use(PullRefresh)
+  .use(DropdownMenu).use(DropdownItem).use(VanImage).use(Icon).use(PullRefresh).use(Tab).use(Tabs)
+  .use(Sidebar).use(SidebarItem).use(Sticky)
   .mount('#app')

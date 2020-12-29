@@ -72,6 +72,46 @@ export default {
       minConsumption: 20,
       expressFee: 0,
       describe: '大刀牛肉面味道很正宗'
+    },{
+      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
+      title: '半城外·牛杂小碗菜(高沙店)',
+      score: 4.9,
+      sales: 7011,
+      minConsumption: 20,
+      expressFee: 0,
+      describe: '大刀牛肉面味道很正宗'
+    },{
+      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
+      title: '半城外·牛杂小碗菜(高沙店)',
+      score: 4.9,
+      sales: 7011,
+      minConsumption: 20,
+      expressFee: 0,
+      describe: '大刀牛肉面味道很正宗'
+    },{
+      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
+      title: '半城外·牛杂小碗菜(高沙店)',
+      score: 4.9,
+      sales: 7011,
+      minConsumption: 20,
+      expressFee: 0,
+      describe: '大刀牛肉面味道很正宗'
+    },{
+      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
+      title: '半城外·牛杂小碗菜(高沙店)',
+      score: 4.9,
+      sales: 7011,
+      minConsumption: 20,
+      expressFee: 0,
+      describe: '大刀牛肉面味道很正宗'
+    },{
+      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
+      title: '半城外·牛杂小碗菜(高沙店)',
+      score: 4.9,
+      sales: 7011,
+      minConsumption: 20,
+      expressFee: 0,
+      describe: '大刀牛肉面味道很正宗'
     }])
     const gotoShop = (e) => {
       e = JSON.stringify(e)

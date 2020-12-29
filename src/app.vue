@@ -1,6 +1,6 @@
 <template>
   <nav-bar></nav-bar>
-  <div id="scroll" class="scroll">
+  <div id="scroll">
     <router-view/>
   </div>
   <tab-bar v-show="this.$route.meta.tabBar"></tab-bar>
@@ -48,11 +48,11 @@ body {
   margin: 0;
   background: #333;
 }
-.scroll {
+#scroll {
   padding-top: 40px;
 }
 .container {
-  min-height: calc(100% + 55px);
+  height: calc(100% + 55px);
 }
 .bottom-seat {
   height: 80px;

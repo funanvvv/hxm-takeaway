@@ -1,6 +1,6 @@
 <template>
   <div class="shop-page container">
-    <div class="main-wrap">
+    <div class="shop-main-wrap">
       <div class="options-bar">
         <van-icon name="down" @click="goBack" />
         <el-input
@@ -12,33 +12,69 @@
         </el-input>
       </div>
       <div class="shop-main-bar">
-        {{shop.title}}
+        <div class="shop-basic-info">
+          <div class="basic-left">
+            <div class="title">{{shop.title}}</div>
+            <div class="describe">{{shop.describe}}</div>
+          </div>
+          <el-avatar shape="square" :size="60" :src="shop.avatarSrc"></el-avatar>
+        </div>
+        <div class="shop-discount-notice">
+          优惠
+        </div>
+        <van-tabs v-model:active="active1">
+          <van-tab title="标签 1">
+            <van-sidebar v-model="active2">
+              <van-sidebar-item title="标签名称" />
+            </van-sidebar>
+          </van-tab>
+          <van-tab title="标签 2">
+            <van-sidebar v-model="active3">
+              <van-sidebar-item title="标签名称" />
+            </van-sidebar>
+            <food-list></food-list>
+          </van-tab>
+        </van-tabs>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import '@/utils/js/scroll.js'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive, toRefs } from 'vue'
+import foodList from '@/components/shop/foodList.vue'
 import { useRoute } from 'vue-router'
+
 export default {
+  components: {
+    foodList,
+  },
   setup() {
     const route = useRoute()
-    const shop = ref('')
+    const shop = ref(JSON.parse(route.query.shop))
+    const active = reactive({
+      active1: 1,
+      active2: 1,
+      active3: 1,
+    });
     onMounted(() => {
-      shop.value = JSON.parse(route.query.shop)
-      console.log(shop.value)
+      window.scrollTo(0, 0)
     })
-    return { shop }
+    return { shop, active, ...toRefs(active) }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1)
+    }
   }
 }
 </script>
 
 <style lang="scss">
+@import '@/scss/global.scss';
 .shop-page {
   background: #f7f7f7;
-  .main-wrap {
+  .shop-main-wrap {
     position: relative;
     top: 49px;
     .options-bar {
@@ -49,6 +85,7 @@ export default {
       top: 40px;
       align-items: center;
       padding: 5px 0;
+      z-index: 100;
       .van-icon-down {
         transform: rotate(90deg);
         padding: 0 10px;
@@ -56,6 +93,7 @@ export default {
       }
       .input-with-search {
         padding-right: 15px;
+        z-index: 100;
         .el-input__inner {
           border-radius: 20px;
         }
@@ -63,7 +101,49 @@ export default {
     }
     .shop-main-bar {
       background: #fff;
-      height: 1000px;
+      .shop-basic-info {
+        @include flex-row(space-between);
+        padding: 10px 10px 0;
+        .basic-left {
+          max-width: calc(100% - 60px);
+          .title {
+            text-overflow:ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 20px;
+            font-weight: bold;
+          }
+          .describe {
+            margin-top: 3px;
+            color: #333;
+          }
+        }
+        .el-avatar {
+          min-width: 60px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+        }
+      }
+      .van-tabs {
+        z-index: 0;
+        position: sticky;
+        top: 90px;
+        .van-tab {
+          flex: unset;
+          min-width: 100px;
+        }
+        .van-tabs__line {
+          background: #333;
+        }
+        .van-sidebar-item--select::before {
+          background: transparent;
+        }
+        .van-tab__pane {
+          display: flex;
+        }
+        .van-sticky--fixed {
+          left: 80px;
+        }
+      }
     }
   }
 }

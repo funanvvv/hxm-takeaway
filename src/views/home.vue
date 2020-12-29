@@ -14,7 +14,7 @@
       </el-input>
       <search-tags></search-tags>
       <app-carousel></app-carousel>
-      <shop-list></shop-list>
+      <shop-list data='1'></shop-list>
     </div>
     <div class="bottom-seat"></div>
   </div>
