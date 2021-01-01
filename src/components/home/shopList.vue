@@ -1,5 +1,7 @@
 <template>
-  <div class="home-shop-list-title">附近推荐</div>
+  <van-sticky :offset-top="90">
+    <div class="home-shop-list-title">附近推荐</div>
+  </van-sticky>
   <div class="shop-list-wrap">
     <van-dropdown-menu>
       <van-dropdown-item v-model="state.value1" :options="option1" />

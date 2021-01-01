@@ -18,9 +18,9 @@ window.onscroll = function() {
     } else if(val !=0 && val2 != 90) {
       nav.style.setProperty('background-color', '#333')
     } else if(val2 == 90 && val ==0) {
-      dom.style.setProperty('background-color', '#fff')
-      dom2.style.setProperty('background-color', '#fff')
-      nav.style.setProperty('background-color', '#fff')
+      // dom.style.setProperty('background-color', '#fff')
+      // dom2.style.setProperty('background-color', '#fff')
+      // nav.style.setProperty('background-color', '#fff')
     }
   }
 }

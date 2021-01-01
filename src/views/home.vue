@@ -1,22 +1,26 @@
 <template>
   <div class="home-page">
-    <top-status></top-status>
-    <div class="main-wrap">
-      <el-input
-        placeholder="请输入内容"
-        v-model="input"
-        class="input-with-search"
-        @focus="gotoSearch"
-      >
-        <template #append>
-          <el-button icon="el-icon-search"></el-button>
-        </template>
-      </el-input>
-      <search-tags></search-tags>
-      <app-carousel></app-carousel>
-      <shop-list data='1'></shop-list>
-    </div>
-    <div class="bottom-seat"></div>
+    <van-pull-refresh v-model="state.loading" @refresh="onRefresh">
+      <top-status></top-status>
+      <div class="main-wrap">
+        <van-sticky :offset-top="40">
+          <el-input
+            placeholder="请输入内容"
+            v-model="input"
+            class="input-with-search"
+            @focus="gotoSearch"
+          >
+            <template #append>
+              <el-button icon="el-icon-search"></el-button>
+            </template>
+          </el-input>
+        </van-sticky>
+        <search-tags></search-tags>
+        <app-carousel></app-carousel>
+        <shop-list data='1'></shop-list>
+      </div>
+      <div class="bottom-seat"></div>
+    </van-pull-refresh>
   </div>
 </template>
 
@@ -27,7 +31,8 @@ import topStatus from '@/components/home/topStatus.vue'
 import searchTags from '@/components/home/searchTags.vue'
 import appCarousel from '@/components/home/appCarousel.vue'
 import shopList from '@/components/home/shopList.vue'
-import { onMounted } from 'vue'
+import { onMounted, reactive } from 'vue'
+import { Toast } from 'vant';
 export default {
   components: {
     searchTags,
@@ -42,10 +47,21 @@ export default {
         path: '/search'
       })
     }
+    const state = reactive({
+      count: 0,
+      loading: false,
+    });
+    const onRefresh = () => {
+      setTimeout(() => {
+        Toast('刷新成功');
+        state.loading = false;
+        state.count++;
+      }, 1000);
+    };
     onMounted(() => {
       return
     })
-    return { gotoSearch }
+    return { gotoSearch, onRefresh, state }
   },
 }
 </script>
