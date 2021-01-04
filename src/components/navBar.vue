@@ -1,14 +1,9 @@
 <template>
-  <div class="nav-bar" :style="{height: sbh + 'px'}"></div>
+  <div class="nav-bar"></div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      sbh: this.$store.state.userConfig || 40
-    }
-  },
   watch:{
     $route(to){
       if(to.path == '/search') {
@@ -31,6 +26,7 @@ export default {
 <style scoped lang="scss">
 .nav-bar {
   width: 100%;
+  height: 40px;
   position: fixed;
   background-color: #333;
   transition: .3s;

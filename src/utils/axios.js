@@ -12,9 +12,9 @@ if (window.location.href.indexOf('localhost') != -1 || window.location.href.inde
 axios.defaults.timeout = 20000
 
 axios.interceptors.request.use((config) => {
-  let token = sessionStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
   if (token) {
-    config.headers.user_token = token;
+    config.headers.userToken = token
     return config
   }
   return config
