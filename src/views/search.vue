@@ -7,7 +7,6 @@
         placeholder="请输入内容"
         v-model="input"
         class="input-with-search"
-        @focus="gotoSearch"
       >
         <template #append>
           <el-button icon="el-icon-search"></el-button>

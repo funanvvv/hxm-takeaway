@@ -7,7 +7,6 @@
           placeholder="请输入内容"
           v-model="input"
           class="input-with-search"
-          @focus="gotoSearch"
         >
         </el-input>
       </div>
@@ -15,39 +14,44 @@
         <div class="shop-basic-info">
           <div class="basic-left">
             <div class="title">{{shop.title}}</div>
-            <div class="describe">{{shop.describe}}</div>
+            <div class="shop-score-sales">
+              <span class="emphasize">{{shop.score}}</span>
+              <span>月销{{shop.sales}}</span>
+            </div>
           </div>
-          <el-avatar shape="square" :size="60" :src="shop.avatarSrc"></el-avatar>
+          <el-avatar 
+            shape="square" 
+            :size="60" 
+            :src="shop.avatarSrc">
+          </el-avatar>
         </div>
-        <div class="shop-discount-notice">
-          优惠
-        </div>
-        <van-tabs v-model:active="active1">
-          <van-tab title="标签 1">
-            <van-sidebar v-model="active2">
-              <van-sidebar-item title="标签名称" />
-            </van-sidebar>
-          </van-tab>
-          <van-tab title="标签 2">
-            <van-sidebar v-model="active3">
-              <van-sidebar-item title="标签名称" />
-            </van-sidebar>
-            <food-list></food-list>
-          </van-tab>
-        </van-tabs>
+        <!-- <div class="shop-discount-notice">
+          优惠<br>
+          公告{{}}
+        </div> -->
+        <van-sticky :offset-top="90">
+          <van-tabs v-model:active="active1">
+            <van-tab title="点餐"></van-tab>
+            <van-tab title="评价"></van-tab>
+          </van-tabs>
+        </van-sticky>
+        <food-side></food-side>
+        <food-list :data="theList" @click="pickList"></food-list>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, reactive, toRefs } from 'vue'
+import { ref, onMounted, reactive, toRefs, provide } from 'vue'
 import foodList from '@/components/shop/foodList.vue'
+import foodSide from '@/components/shop/foodSide.vue'
 import { useRoute } from 'vue-router'
 
 export default {
   components: {
     foodList,
+    foodSide,
   },
   setup() {
     const route = useRoute()
@@ -56,11 +60,52 @@ export default {
       active1: 1,
       active2: 1,
       active3: 1,
-    });
+    })
+    const list = ref([[{
+      name: 'zzzzzzzzz'
+    },{
+      name: 'zxzxxxxxx'
+    },{
+      name: 'zxzxxxxxx'
+    },{
+      name: 'zxzxxxxxx'
+    },{
+      name: 'zxzxxxxxx'
+    },{
+      name: 'zxzxxxxxx'
+    },{
+      name: 'zxzxxxxxx'
+    },{
+      name: 'zxzxxxxxx'
+    },{
+      name: 'zxzxxxxxx'
+    },{
+      name: 'zxzxxxxxx'
+    },{
+      name: 'zxzxxxxxx'
+    }],[{
+      name: 'iiiiiiiii'
+    },{
+      name: 'iiiiiiiii'
+    }]])
+    const changeList = reactive({
+      theList: list.value[0],
+      pickList: () => {
+        changeList.theList = list.value[1]
+        console.log(changeList.theList)
+      }
+    })
     onMounted(() => {
       window.scrollTo(0, 0)
     })
-    return { shop, active, ...toRefs(active) }
+    provide('list', changeList)
+    return {
+      shop,
+      active,
+      ...toRefs(active),
+      list,
+      ...toRefs(changeList),
+    }
   },
   methods: {
     goBack() {
@@ -113,15 +158,28 @@ export default {
             font-size: 20px;
             font-weight: bold;
           }
-          .describe {
+          .shop-score-sales {
             margin-top: 3px;
-            color: #333;
+            color: #666;
+            font-size: 12px;
+            span {
+              &:first-child {
+                margin-right: 10px;
+              }
+            }
+            .emphasize {
+              font-weight: bold;
+              color: rgb(255, 96, 57);
+            }
           }
         }
         .el-avatar {
           min-width: 60px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
         }
+      }
+      .shop-discount-notice {
+        padding: 0 10px 0;
       }
       .van-tabs {
         z-index: 0;

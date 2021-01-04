@@ -31,16 +31,14 @@ export default {
       })()
     }
     const sbh = this.$route.query.sbh
-    console.log(sbh)
-    console.log(window.location)
     this.$store.commit('SET_USER_CONFIG', sbh)
-    console.log(this.$store.state.userConfig)
   },
 }
 </script>
 
 <style lang="scss">
 //禁用长按选中文本
+@import '@/scss/vant.scss';
 * {
   -webkit-touch-callout:none;
   -webkit-user-select:none;
