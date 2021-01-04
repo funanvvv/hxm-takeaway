@@ -36,7 +36,7 @@
           </van-tabs>
         </van-sticky>
         <food-side></food-side>
-        <food-list :data="theList" @click="pickList"></food-list>
+        <food-list></food-list>
       </div>
     </div>
   </div>
@@ -191,15 +191,6 @@ export default {
         }
         .van-tabs__line {
           background: #333;
-        }
-        .van-sidebar-item--select::before {
-          background: transparent;
-        }
-        .van-tab__pane {
-          display: flex;
-        }
-        .van-sticky--fixed {
-          left: 80px;
         }
       }
     }
