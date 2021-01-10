@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import '@/utils/js/scroll.js'
+import '@/utils/scroll.js'
 import tabBar from '@/components/tabBar'
 import navBar from '@/components/navBar'
 import { testApi } from '@/utils/axios.js'

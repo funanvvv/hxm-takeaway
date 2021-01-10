@@ -2,13 +2,10 @@ import axios from 'axios'
 import qs from 'qs'
 import router from '@/router/index'
 
-let base = 'http://localhost:8088'
+let base = 'http://test.funanvvv.cn:8088'
 if (window.location.href.indexOf('localhost') != -1 || window.location.href.indexOf('192.168.20.62') != -1) {
   base = 'http://localhost:8088';
-} else {
-  base = 'http://localhost:8088'
 }
-
 axios.defaults.timeout = 20000
 
 axios.interceptors.request.use((config) => {
@@ -38,7 +35,7 @@ axios.interceptors.response.use((res) => {
 
 
 export const testApi = params => {
-  return axios.post(`${base}/user/login`, qs.stringify(params)).then(res => res.data)
+  return axios.post(`${base}/user/login?username=null&password=123456`, qs.stringify(params)).then(res => res.data)
 }
 
 

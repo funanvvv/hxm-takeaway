@@ -3,12 +3,14 @@
     <div class="shop-main-wrap">
       <div class="options-bar">
         <van-icon name="down" @click="goBack" />
-        <el-input
-          placeholder="请输入内容"
-          v-model="input"
-          class="input-with-search"
-        >
-        </el-input>
+        <div id="shop-search">
+          <van-field
+            label="文本"
+            left-icon="smile-o"
+            right-icon="warning-o"
+            placeholder="显示图标"
+          />
+        </div>
       </div>
       <div class="shop-main-bar">
         <div class="shop-basic-info">
@@ -131,17 +133,16 @@ export default {
       align-items: center;
       padding: 5px 0;
       z-index: 100;
+      #shop-search {
+        padding: 0 10px;
+        .van-field {
+          border-radius: 50px;
+        }
+      }
       .van-icon-down {
         transform: rotate(90deg);
         padding: 0 10px;
         font-size: 20px;
-      }
-      .input-with-search {
-        padding-right: 15px;
-        z-index: 100;
-        .el-input__inner {
-          border-radius: 20px;
-        }
       }
     }
     .shop-main-bar {
@@ -172,10 +173,6 @@ export default {
               color: rgb(255, 96, 57);
             }
           }
-        }
-        .el-avatar {
-          min-width: 60px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
         }
       }
       .shop-discount-notice {

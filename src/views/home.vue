@@ -4,20 +4,19 @@
       <top-status></top-status>
       <div class="main-wrap">
         <van-sticky :offset-top="40">
-          <el-input
-            placeholder="请输入内容"
-            v-model="input"
-            class="input-with-search"
-            @focus="gotoSearch"
-          >
-            <template #append>
-              <el-button icon="el-icon-search"></el-button>
-            </template>
-          </el-input>
+          <div id="home-search">
+            <van-field
+              v-model="state.value1"
+              label="文本"
+              left-icon="smile-o"
+              right-icon="warning-o"
+              placeholder="显示图标"
+            />
+          </div>
         </van-sticky>
         <search-tags></search-tags>
         <app-carousel></app-carousel>
-        <shop-list data='1'></shop-list>
+        <shop-list></shop-list>
       </div>
       <div class="bottom-seat"></div>
     </van-pull-refresh>
@@ -66,34 +65,18 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .home-page {
   .main-wrap {
     background: #f7f7f7;
     border-radius: 25px 25px 0 0;
-    .input-with-search {
+    #home-search {
       transition: .3s;
-      position: sticky;
-      top: 40px;
-      box-sizing: border-box;
       padding: 10px;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      background: #f7f7f7;
-      z-index: 99;
-    }
-  }
-}
-</style>
-<style lang="scss">
-.home-page {
-  .input-with-search {
-    transition: .3s;
-    .el-input__inner {
-      border-radius: 20px 0 0 20px;
-    }
-    .el-input-group__append {
-      border-radius: 0 20px 20px 0;
+      border-radius: 20px 20px 0 0;
+      .van-field {
+        border-radius: 50px;
+      }
     }
   }
 }

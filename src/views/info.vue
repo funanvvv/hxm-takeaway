@@ -1,7 +1,12 @@
 <template>
   <div class="info-page container">
     <div class="basic-info">
-      <el-avatar :size="60" :src="url"></el-avatar>
+      <van-image
+        width="4rem"
+        height="4rem"
+        fit="cover"
+        src="https://img.yzcdn.cn/vant/cat.jpeg"
+      />
       <div class="basic-info-right">
         <div>
           这个是用户昵称
@@ -35,6 +40,9 @@ export default {
     display: flex;
     position: relative;
     top: 10px;
+    .van-image > img {
+      border-radius: 5px;
+    }
     &-right {
       flex: 1;
       padding-left: 20px;
