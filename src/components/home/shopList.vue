@@ -8,30 +8,32 @@
       <van-dropdown-item v-model="state.value2" :options="option2" />
     </van-dropdown-menu>
     <div class="list">
-      <div class="list-item" v-for="(item, index) in list" :key="index" @click="gotoShop(item)">
-        <van-image
-          width="4rem"
-          height="4rem"
-          fit="cover"
-          :src="item.avatarSrc"
-        />
-        <div class="item-content">
-          <div class="title">{{item.title}}</div>
-          <div class="score-sales-express">
-            <span class="emphasize">{{item.score}}分</span>
-            <span>月售{{item.sales}}</span>
-          </div>
-          <div class="score-sales-express">
-            <span>起送￥{{item.minConsumption}}</span>
-            <span>配送费￥{{item.expressFee}}</span>
-          </div>
-          <div class="describe">
-            <div class="tag">
-              "{{item.describe}}"
+      <lazy-component>
+        <div class="list-item" v-for="(item, index) in list" :key="index" @click="gotoShop(item)">
+          <van-image
+            width="4rem"
+            height="4rem"
+            fit="cover"
+            :src="item.avatarSrc"
+          />
+          <div class="item-content">
+            <div class="title">{{item.title}}</div>
+            <div class="score-sales-express">
+              <span class="emphasize">{{item.score}}分</span>
+              <span>月售{{item.sales}}</span>
+            </div>
+            <div class="score-sales-express">
+              <span>起送￥{{item.minConsumption}}</span>
+              <span>配送费￥{{item.expressFee}}</span>
+            </div>
+            <div class="describe">
+              <div class="tag">
+                "{{item.describe}}"
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </lazy-component>
     </div>
   </div>
 </template>

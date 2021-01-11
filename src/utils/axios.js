@@ -28,7 +28,7 @@ axios.interceptors.response.use((res) => {
   return res
 }, (err) => {
   if (err.response) {
-    console.log("请求错误", err.response)
+    return
   }
   return Promise.reject(err)
 })

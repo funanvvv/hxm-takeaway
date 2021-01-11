@@ -9,7 +9,7 @@
       />
       <div class="basic-info-right">
         <div>
-          这个是用户昵称
+          <span @click="this.$router.push({path: '/login'})">请登录</span>
           <div class="basic-info-icon">
             <van-icon name="setting-o" />
             <van-icon name="comment-circle-o" />
