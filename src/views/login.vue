@@ -4,7 +4,7 @@
     <div class="body">
       <p class="title">花小猫</p>
       <div class="tip1">使用本机号码一键登录</div>
-      <input type="text" placeholder="输入手机号">
+      <input type="text" placeholder="输入手机号" v-model="phoneNumber">
       <van-password-input
         :value="value"
         :length="4"
@@ -17,7 +17,7 @@
         @blur="showKeyboard = false"
       />
       <div style="padding: 0 10px">
-        <van-button type="primary" block>获取验证码</van-button>
+        <van-button type="primary" block @click="getVerifyCode">获取验证码</van-button>
         <van-button disabled class="button2" type="primary" block>使用其他方式登录</van-button>
       </div>
       <div class="tip2">
@@ -30,11 +30,37 @@
   </div>
 </template>
 
+<script>
+import { reactive, toRefs } from 'vue'
+import { getVerifyCode } from '@/utils/axios'
+export default {
+  setup() {
+    const verify = reactive({
+      phoneNumber: '',
+      getVerifyCode: () => {
+        const param = {
+          "phoneNumber": '+86' + verify.phoneNumber
+        }
+        console.log(param)
+        getVerifyCode(param).then((res) => {
+          console.log(param)
+        })
+      }
+    })
+      
+    return {
+      ...toRefs(verify)
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 .login-page {
-  padding: 15px;
+  padding: 15px 20px;
   height: calc(100% + 25px);
   background: #fafafa;
+  overflow-y: auto;
   .van-icon {
     font-size: 22px;
     left: 10px;
@@ -61,6 +87,9 @@
         color: #aaa;
         font-size: 16px ;
       }
+    }
+    .van-password-input {
+      margin-bottom: 25px;
     }
     .van-button {
       margin-top: 10px;

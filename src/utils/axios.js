@@ -37,7 +37,10 @@ axios.interceptors.response.use((res) => {
 export const testApi = params => {
   return axios.post(`${base}/user/login?username=null&password=123456`, qs.stringify(params)).then(res => res.data)
 }
-
+//login
+export const getVerifyCode = params => {
+  return axios.post(`${base}/sms/verify`, params, {headers: {'Content-Type': 'application/json'}}).then(res => res.data)
+}
 
 
 

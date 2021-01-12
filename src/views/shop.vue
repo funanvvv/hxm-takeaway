@@ -21,11 +21,11 @@
               <span>月销{{shop.sales}}</span>
             </div>
           </div>
-          <el-avatar 
+          <!-- <el-avatar 
             shape="square" 
             :size="60" 
             :src="shop.avatarSrc">
-          </el-avatar>
+          </el-avatar> -->
         </div>
         <!-- <div class="shop-discount-notice">
           优惠<br>
