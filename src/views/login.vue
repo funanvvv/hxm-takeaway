@@ -6,18 +6,19 @@
       <div class="tip1">使用本机号码一键登录</div>
       <input type="text" placeholder="输入手机号" v-model="phoneNumber">
       <van-password-input
-        :value="value"
-        :length="4"
+        :value="verifyCode"
+        :length="6"
+        :mask="false"
         :focused="showKeyboard"
         @focus="showKeyboard = true"
       />
       <van-number-keyboard
-        v-model="value"
+        v-model="verifyCode"
         :show="showKeyboard"
         @blur="showKeyboard = false"
       />
       <div style="padding: 0 10px">
-        <van-button type="primary" block @click="getVerifyCode">获取验证码</van-button>
+        <van-button type="primary" block @click="doVerify">获取验证码</van-button>
         <van-button disabled class="button2" type="primary" block>使用其他方式登录</van-button>
       </div>
       <div class="tip2">
@@ -31,24 +32,49 @@
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
+import { reactive, ref, toRefs, watch } from 'vue'
 import { getVerifyCode } from '@/utils/axios'
+import { Toast } from 'vant'
 export default {
   setup() {
+    const showKeyboard = ref(false)
+    const verifyCode = ref()
     const verify = reactive({
       phoneNumber: '',
-      getVerifyCode: () => {
-        const param = {
-          "phoneNumber": '+86' + verify.phoneNumber
-        }
-        console.log(param)
-        getVerifyCode(param).then((res) => {
-          console.log(param)
+      doVerify: () => {
+        Toast.loading({
+          duration: 0,
+          forbidClick: true,
+          message: '稍候'
+        })
+        getVerifyCode(verify.phoneNumber).then((res) => {
+          showKeyboard.value = true
+          if(res.code == '0') {
+            Toast.success(res.msg)
+            showKeyboard.value = true
+          } else if(res.code == '1') {
+            Toast.fail(res.msg)
+          }else {
+            Toast.fail('未知错误')
+          }
+        }).catch(() => {
+          Toast.fail('未知错误')
+        })
+      }
+    })
+
+    watch(verifyCode, (val) => {
+      if(val.length == 6) {
+        Toast.loading({
+          forbidClick: true,
+          message: '稍候'
         })
       }
     })
       
     return {
+      showKeyboard,
+      verifyCode,
       ...toRefs(verify)
     }
   }
@@ -87,6 +113,14 @@ export default {
         color: #aaa;
         font-size: 16px ;
       }
+    }
+    .van-password-input__security li {
+      background-color: #fafafa;
+      border-bottom: 1px solid;
+      margin: 0 5px;
+    }
+    [class*='van-hairline']::after {
+      content: unset;
     }
     .van-password-input {
       margin-bottom: 25px;

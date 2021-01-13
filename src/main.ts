@@ -9,8 +9,10 @@ import {
   Icon, PullRefresh,
   Tab, Tabs, Sticky,
   Sidebar, SidebarItem,
-  Field, Lazyload, Button,
-  PasswordInput, NumberKeyboard
+  Field, Lazyload,
+  PasswordInput,
+  NumberKeyboard,
+  Toast, Button,
 } from 'vant';
 
 createApp(App)
@@ -21,4 +23,5 @@ createApp(App)
   .use(Sidebar).use(SidebarItem).use(Sticky)
   .use(Field).use(Lazyload, {lazyComponent: true})
   .use(Button).use(PasswordInput).use(NumberKeyboard)
+  .use(Toast)
   .mount('#app')

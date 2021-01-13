@@ -10,7 +10,6 @@
 import '@/utils/scroll.js'
 import tabBar from '@/components/tabBar'
 import navBar from '@/components/navBar'
-import { testApi } from '@/utils/axios.js'
 
 export default {
   components: {
@@ -31,9 +30,6 @@ export default {
         this.setHeight()
       })()
     }
-    testApi().then((res) => {
-      console.log('api', res)
-    })
   },
 }
 </script>
