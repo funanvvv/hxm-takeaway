@@ -4,8 +4,14 @@
     <div class="body">
       <p class="title">花小猫</p>
       <div class="tip1">使用本机号码一键登录</div>
-      <input type="text" placeholder="输入手机号" v-model="phoneNumber">
+      <input
+        v-if="step=='phone'"
+        type="text"
+        placeholder="输入手机号"
+        v-model="phoneNumber"
+      >
       <van-password-input
+        v-if="step=='verify'"
         :value="verifyCode"
         :length="6"
         :mask="false"
@@ -18,7 +24,7 @@
         @blur="showKeyboard = false"
       />
       <div style="padding: 0 10px">
-        <van-button type="primary" block @click="doVerify">获取验证码</van-button>
+        <van-button :disabled="cooling!=0" type="primary" block @click="doVerify">{{buttonText}}</van-button>
         <van-button disabled class="button2" type="primary" block>使用其他方式登录</van-button>
       </div>
       <div class="tip2">
@@ -33,46 +39,74 @@
 
 <script>
 import { reactive, ref, toRefs, watch } from 'vue'
-import { getVerifyCode } from '@/utils/axios'
+import { getVerifyCode, checkVerifyCode } from '@/utils/axios'
 import { Toast } from 'vant'
 export default {
   setup() {
+    const step = ref('phone')
     const showKeyboard = ref(false)
     const verifyCode = ref()
+    const cooling = ref(0)
+    const buttonText = ref('获取验证码')
     const verify = reactive({
       phoneNumber: '',
       doVerify: () => {
-        Toast.loading({
-          duration: 0,
-          forbidClick: true,
-          message: '稍候'
-        })
-        getVerifyCode(verify.phoneNumber).then((res) => {
-          showKeyboard.value = true
-          if(res.code == '0') {
-            Toast.success(res.msg)
-            showKeyboard.value = true
-          } else if(res.code == '1') {
-            Toast.fail(res.msg)
-          }else {
+        if((/^[1](([3][0-9])|([4][0,1,4-9])|([5][0-3,5-9])|([6][2,5,6,7])|([7][0-8])|([8][0-9])|([9][0-3,5-9]))[0-9]{8}$/.test(verify.phoneNumber))){ 
+          Toast.loading({
+            duration: 0,
+            forbidClick: true,
+            message: '稍候'
+          })
+          getVerifyCode(verify.phoneNumber).then((res) => {
+            if(res.code == '0') {
+              Toast.success(res.msg)
+              showKeyboard.value = true
+              cooling.value = 62
+              step.value = 'verify'
+              const timer = window.setInterval(() => {
+                if(cooling.value > 1 && cooling.value <= 62) {
+                  cooling.value--
+                  buttonText.value = '获取验证码(' + cooling.value + '秒)'
+                } else {
+                  clearInterval(timer)
+                  buttonText.value = '获取验证码'
+                }
+              }, 1000)
+            } else if(res.code == '1') {
+              Toast.fail(res.msg)
+            }else {
+              Toast.fail('未知错误')
+            }
+          }).catch(() => {
             Toast.fail('未知错误')
-          }
-        }).catch(() => {
-          Toast.fail('未知错误')
-        })
+          })
+        } else {
+          Toast.fail('请填写正确的手机号')
+        }
       }
     })
 
     watch(verifyCode, (val) => {
       if(val.length == 6) {
         Toast.loading({
+          duration: 0,
           forbidClick: true,
           message: '稍候'
+        })
+        checkVerifyCode({
+          phoneNumber: verify.phoneNumber,
+          verifyCode: verifyCode.value
+        }).then((res) => {
+          Toast.success(res)
+          console.log(res)
         })
       }
     })
       
     return {
+      step,
+      cooling,
+      buttonText,
       showKeyboard,
       verifyCode,
       ...toRefs(verify)
@@ -102,7 +136,7 @@ export default {
     }
     input {
       width: 180px;
-      margin: 18px 0 30px 0;
+      margin: 22px 0 26px 0;
       background-color: #fafafa;
       border: none;
       border-bottom: 1px solid #000;
@@ -123,7 +157,8 @@ export default {
       content: unset;
     }
     .van-password-input {
-      margin-bottom: 25px;
+      margin-bottom: 26px;
+      margin-top: 11px;
     }
     .van-button {
       margin-top: 10px;

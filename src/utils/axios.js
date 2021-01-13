@@ -35,7 +35,11 @@ axios.interceptors.response.use((res) => {
 
 
 
-//login
+//获取验证码
 export const getVerifyCode = param => {
   return axios.post(`${base}/sms/verify?phoneNumber=${param}`).then(res => res.data)
+}
+//校验验证码
+export const checkVerifyCode = param => {
+  return axios.post(`${base}/check/verify`, param).then(res => res.data)
 }
