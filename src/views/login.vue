@@ -24,7 +24,7 @@
         @blur="showKeyboard = false"
       />
       <div style="padding: 0 10px">
-        <van-button :disabled="cooling!=0" type="primary" block @click="doVerify">{{buttonText}}</van-button>
+        <van-button :disabled="cooling!=1" type="primary" block @click="doVerify">{{buttonText}}</van-button>
         <van-button disabled class="button2" type="primary" block>使用其他方式登录</van-button>
       </div>
       <div class="tip2">
@@ -40,13 +40,18 @@
 <script>
 import { reactive, ref, toRefs, watch } from 'vue'
 import { getVerifyCode, checkVerifyCode } from '@/utils/axios'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { Toast } from 'vant'
 export default {
   setup() {
+    const store = useStore()
+    const router = useRouter()
     const step = ref('phone')
+    // const step = ref('verify')
     const showKeyboard = ref(false)
     const verifyCode = ref()
-    const cooling = ref(0)
+    const cooling = ref(1)
     const buttonText = ref('获取验证码')
     const verify = reactive({
       phoneNumber: '',
@@ -74,7 +79,7 @@ export default {
               }, 1000)
             } else if(res.code == '1') {
               Toast.fail(res.msg)
-            }else {
+            } else {
               Toast.fail('未知错误')
             }
           }).catch(() => {
@@ -97,8 +102,18 @@ export default {
           phoneNumber: verify.phoneNumber,
           verifyCode: verifyCode.value
         }).then((res) => {
-          Toast.success(res)
-          console.log(res)
+          if(res.code == '0') {
+            Toast.success(res.msg)
+            store.commit('SET_USER_CONFIG', {phoneNumber: verify.phoneNumber})
+            router.go(-1)
+          } else if(res.code == '2') {
+            Toast.fail(res.msg)
+            step.value = 'phone'
+          } else {
+            Toast.fail(res.msg)
+          }
+        }).catch(() => {
+          Toast.fail('未知错误')
         })
       }
     })

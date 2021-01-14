@@ -2,7 +2,9 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    userConfig: '',
+    userConfig: {
+      phoneNumber: '',
+    },
   },
   mutations: {
     SET_USER_CONFIG (state, value) {

@@ -41,5 +41,5 @@ export const getVerifyCode = param => {
 }
 //校验验证码
 export const checkVerifyCode = param => {
-  return axios.post(`${base}/check/verify`, param).then(res => res.data)
+  return axios.post(`${base}/sms/check`, param).then(res => res.data)
 }
