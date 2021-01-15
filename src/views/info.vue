@@ -26,18 +26,24 @@
 <script>
 import { ref } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { test } from '@/utils/axios'
 import { Toast } from 'vant'
 export default {
   setup() {
     const url = ref('https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png')
     const store = useStore()
+    const router = useRouter()
     const phone = ref(store.state.phoneNumber)
     const testToken = () => {
       test().then((res) => {
-        console.log(res)
         if(res.code == '5') {
           Toast.fail(res.msg)
+          if(res.msg.indexOf('点击') == -1) {
+            router.push({
+              path: '/login'
+            })
+          }
         } else {
           Toast.success(res.msg)
         }
@@ -90,6 +96,10 @@ export default {
         }
       }
     }
+  }
+  .van-button {
+    display: block;
+    margin: 20px auto;
   }
 }
 </style>

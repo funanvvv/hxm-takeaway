@@ -27,9 +27,17 @@ export default {
 
     onMounted(() => {
       if(document.cookie) {
-        const cookiePhone = document.cookie.split("phoneNumber")[1].split("=")[1]
+        let cookiePhone
+        let cookieToken
+        try {
+          cookiePhone = document.cookie.split("phoneNumber")[1].split(";")[0].split("=")[1]
+          cookieToken = document.cookie.split("token")[1].split(";")[0].split("=")[1]
+        } catch(e) {
+          console.log(e)
+        }
         if(cookiePhone) {
           store.commit('SET_USER_PHONE', cookiePhone)
+          store.commit('SET_USER_TOKEN', cookieToken)
         }
       }
     })
