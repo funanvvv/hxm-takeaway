@@ -102,9 +102,16 @@ export default {
           phoneNumber: verify.phoneNumber,
           verifyCode: verifyCode.value
         }).then((res) => {
+          console.log(res)
           if(res.code == '0') {
             Toast.success(res.msg)
-            store.commit('SET_USER_CONFIG', {phoneNumber: verify.phoneNumber})
+            const d = new Date();
+            d.setTime(d.getTime()+(7*24*60*60*1000));
+            const expires = 'expires='+d.toGMTString();
+            document.cookie = 'phoneNumber='+ verify.phoneNumber + ';' + expires
+            document.cookie = 'token=' + res.data.token + ';' + expires
+            store.commit('SET_USER_PHONE', verify.phoneNumber)
+            store.commit('SET_USER_TOKEN', res.data.token)
             router.go(-1)
           } else if(res.code == '2') {
             Toast.fail(res.msg)

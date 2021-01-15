@@ -9,7 +9,8 @@
       />
       <div class="basic-info-right">
         <div>
-          <span @click="this.$router.push({path: '/login'})">请登录</span>
+          <span v-if="!phone" @click="this.$router.push({path: '/login'})">请登录</span>
+          <span v-if="phone">{{phone}}</span>
           <div class="basic-info-icon">
             <van-icon name="setting-o" />
             <van-icon name="comment-circle-o" />
@@ -18,16 +19,36 @@
         <div>填满了肚子，人就不会空虚</div>
       </div>
     </div>
+    <van-button @click="testToken">token状态测试</van-button>
   </div>
 </template>
 
 <script>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
+import { test } from '@/utils/axios'
+import { Toast } from 'vant'
 export default {
   setup() {
     const url = ref('https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png')
+    const store = useStore()
+    const phone = ref(store.state.phoneNumber)
+    const testToken = () => {
+      test().then((res) => {
+        console.log(res)
+        if(res.code == '5') {
+          Toast.fail(res.msg)
+        } else {
+          Toast.success(res.msg)
+        }
+      })
+    }
 
-    return { url }
+    return {
+      url,
+      phone,
+      testToken,
+    }
   }
 }
 </script>

@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { onMounted } from 'vue'
+import { useStore } from 'vuex'
 import '@/utils/scroll.js'
 import tabBar from '@/components/tabBar'
 import navBar from '@/components/navBar'
@@ -17,10 +19,21 @@ export default {
     navBar,
   },
   setup() {
+    const store = useStore()
     const setHeight = () => {
       const el = document.getElementById("scroll")
       el.style.height=document.documentElement.clientHeight - 95 + 'px'
     }
+
+    onMounted(() => {
+      if(document.cookie) {
+        const cookiePhone = document.cookie.split("phoneNumber")[1].split("=")[1]
+        if(cookiePhone) {
+          store.commit('SET_USER_PHONE', cookiePhone)
+        }
+      }
+    })
+
     return { setHeight }
   },
   mounted() {
