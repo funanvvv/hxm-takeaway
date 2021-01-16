@@ -1,5 +1,4 @@
 import axios from 'axios'
-import qs from 'qs'
 import router from '@/router/index'
 
 let base = 'http://test.funanvvv.cn:8088'

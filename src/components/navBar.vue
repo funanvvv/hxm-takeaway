@@ -5,15 +5,17 @@
 <script>
 export default {
   watch:{
-    $route(to){
+    $route(to, from){
+      if(to.path == '/home') {
+        document.getElementsByClassName('nav-bar')[0].style.transition='.3s'
+      }
       if(to.path == '/search') {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fff')
       } else if(to.path == '/login') {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fafafa')
         document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '0s')
-      } else if(to.path == '/home') {
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#333')
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '.3s')
+      } else if(to.path == '/home' && from.path !='/shop') {
+        document.getElementsByClassName('nav-bar')[0].style.backgroundColor='#333'
       } else {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#f7f7f7')
         document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '0s')

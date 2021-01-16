@@ -1,6 +1,10 @@
 <template>
   <div class="shop-food-list">
-    <div class="shop-food-item" v-for="(item, index) in list.theList" :key="index">
+    <div
+      class="shop-food-item"
+      v-for="(item, index) in list.list[list.index].items"
+      :key="index"
+    >
       {{item.name}}
     </div>
   </div>
@@ -12,7 +16,7 @@ export default {
   setup() {
     const list = inject('list')
     onMounted(() => {
-      console.log(list.theList)
+      console.log(list.list)
     })
     return {
       list,

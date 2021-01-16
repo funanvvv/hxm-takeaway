@@ -31,23 +31,21 @@
           优惠<br>
           公告{{}}
         </div> -->
-        <!-- <van-sticky :offset-top="90"> -->
-        <div>
-          <van-sticky :offset-top="135" @scroll="sideScroll">
+        <div class="tab">
+          <van-sticky :offset-top="offsetTop" @scroll="sideScroll" v-show="active1==0">
             <food-side></food-side>
           </van-sticky>
-          <van-tabs v-model:active="active1" swipeable>
+          <van-tabs v-model:active="active1" swipeable @change="switchTab">
             <van-tab title="点餐">
-              
               <food-list></food-list>
             </van-tab>
             <van-tab title="评价">
-              1
+              <div class="empty-comment">
+                暂无
+              </div>
             </van-tab>
           </van-tabs>
         </div>
-        <!-- </van-sticky> -->
-        
       </div>
     </div>
   </div>
@@ -58,7 +56,6 @@ import { ref, onMounted, reactive, toRefs, provide } from 'vue'
 import foodList from '@/components/shop/foodList.vue'
 import foodSide from '@/components/shop/foodSide.vue'
 import { useRoute } from 'vue-router'
-import Swiper from 'swiper'
 
 export default {
   components: {
@@ -70,59 +67,43 @@ export default {
     const shop = ref(JSON.parse(route.query.shop))
     const active = reactive({
       active1: 0,
-      active2: 1,
-      active3: 1,
     })
-    const list = ref([[{
-      name: 'zzzzzzzzz'
-    },{
-      name: 'zxzxxxxxx'
-    },{
-      name: 'zxzxxxxxx'
-    },{
-      name: 'zxzxxxxxx'
-    },{
-      name: 'zxzxxxxxx'
-    },{
-      name: 'zxzxxxxxx'
-    },{
-      name: 'zxzxxxxxx'
-    },{
-      name: 'zxzxxxxxx'
-    },{
-      name: 'zxzxxxxxx'
-    },{
-      name: 'zxzxxxxxx'
-    },{
-      name: 'zxzxxxxxx'
-    }],[{
-      name: 'iiiiiiiii'
-    },{
-      name: 'iiiiiiiii'
-    }]])
     const changeList = reactive({
-      theList: list.value[0],
-      pickList: () => {
-        changeList.theList = list.value[1]
-        console.log(changeList.theList)
+      list: [{title: '标题1', items: [{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'}]},{title: '标题2', items: [{name:'商品2'},{name:'商品1'},{name:'商品1'},{name:'商品1'}]}],
+      index: 0,
+      onChange: (e) => {
+        changeList.index = e
       }
     })
+    const offsetTop = ref(140)
+    const switchTab = (e) => {
+      active.active1 = e
+    }
     const sideScroll = (e) => {
       if(e.isFixed) {
         document.getElementsByClassName('shop-food-side')[0].classList.remove('position')
       } else {
         document.getElementsByClassName('shop-food-side')[0].classList.add('position')
       }
+      if(e.scrollTop < 50) {
+        offsetTop.value = 190 - e.scrollTop
+      } else {
+        offsetTop.value = 135
+      }
     }
+
     onMounted(() => {
       window.scrollTo(0, 0)
     })
+
     provide('list', changeList)
+
     return {
       shop,
       active,
+      offsetTop,
+      switchTab,
       ...toRefs(active),
-      list,
       ...toRefs(changeList),
       sideScroll,
     }
@@ -165,6 +146,22 @@ export default {
     }
     .shop-main-bar {
       background: #fff;
+      .tab {
+        & > div:first-child {
+          height: 100%!important;
+        }
+        .van-sticky:first-child {
+          position: fixed;
+          z-index: 99;
+          width: 80px;
+          height: 100%;
+        }
+        .empty-comment {
+          color: #999;
+          text-align: center;
+          line-height: calc(100vh - 286px);
+        }
+      }
       .shop-basic-info {
         @include flex-row(space-between);
         padding: 10px 10px 0;
@@ -209,6 +206,9 @@ export default {
           .van-tabs__line {
             background: #333;
           }
+        }
+        .van-tab__pane-wrapper--inactive {
+          min-height: calc(100vh - 136px);
         }
       }
     }
