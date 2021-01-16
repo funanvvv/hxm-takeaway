@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-container">
+  <div class="home-swiper-container">
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(item, index) in list" :key="index">
         <div class="inner-slide" v-for="(item2, index2) in item" :key="index2">
@@ -69,7 +69,7 @@ export default {
       console.log(index,'-' ,index2)
     }
     onMounted(() => {
-      const mySwiper = new Swiper('.swiper-container', {
+      const mySwiper = new Swiper('.home-swiper-container', {
         loop: false,// 循环模式选项 
         pagination: {
           el: '.swiper-pagination',
@@ -82,7 +82,7 @@ export default {
 </script>
 
 <style lang="scss">
-.swiper-container {
+.home-swiper-container {
   height: 140px;
   padding: 10px 0;
   .swiper-slide {

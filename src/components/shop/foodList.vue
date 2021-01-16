@@ -1,9 +1,7 @@
 <template>
   <div class="shop-food-list">
-    <div>
-      <div class="shop-food-item" v-for="(item, index) in list.theList" :key="index">
-        {{item.name}}
-      </div>
+    <div class="shop-food-item" v-for="(item, index) in list.theList" :key="index">
+      {{item.name}}
     </div>
   </div>
 </template>

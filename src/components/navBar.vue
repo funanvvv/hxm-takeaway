@@ -8,18 +8,15 @@ export default {
     $route(to){
       if(to.path == '/search') {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fff')
-      } else if(to.path == '/info') {
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#f7f7f7')
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '0s')
-      } else if(to.path == '/shop') {
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#f7f7f7')
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '0s')
       } else if(to.path == '/login') {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fafafa')
         document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '0s')
-      } else {
+      } else if(to.path == '/home') {
         document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#333')
         document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '.3s')
+      } else {
+        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#f7f7f7')
+        document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '0s')
       }
     }
   },

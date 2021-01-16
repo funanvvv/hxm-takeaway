@@ -1,5 +1,5 @@
 <template>
-  <div class="shop-food-side">
+  <div class="shop-food-side position">
     <div>asd</div>
     <div>fyjd</div>
     <div>nvd</div>
@@ -19,8 +19,10 @@ export default {
 
 <style lang="scss">
 .shop-food-side {
-  position: sticky;
-  top: 134px;
   float: left;
+}
+.position {
+  position: absolute;
+  top: 105px;
 }
 </style>

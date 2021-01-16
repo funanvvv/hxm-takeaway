@@ -31,14 +31,23 @@
           优惠<br>
           公告{{}}
         </div> -->
-        <van-sticky :offset-top="90">
-          <van-tabs v-model:active="active1">
-            <van-tab title="点餐"></van-tab>
-            <van-tab title="评价"></van-tab>
+        <!-- <van-sticky :offset-top="90"> -->
+        <div>
+          <van-sticky :offset-top="135" @scroll="sideScroll">
+            <food-side></food-side>
+          </van-sticky>
+          <van-tabs v-model:active="active1" swipeable>
+            <van-tab title="点餐">
+              
+              <food-list></food-list>
+            </van-tab>
+            <van-tab title="评价">
+              1
+            </van-tab>
           </van-tabs>
-        </van-sticky>
-        <food-side></food-side>
-        <food-list></food-list>
+        </div>
+        <!-- </van-sticky> -->
+        
       </div>
     </div>
   </div>
@@ -49,6 +58,7 @@ import { ref, onMounted, reactive, toRefs, provide } from 'vue'
 import foodList from '@/components/shop/foodList.vue'
 import foodSide from '@/components/shop/foodSide.vue'
 import { useRoute } from 'vue-router'
+import Swiper from 'swiper'
 
 export default {
   components: {
@@ -59,7 +69,7 @@ export default {
     const route = useRoute()
     const shop = ref(JSON.parse(route.query.shop))
     const active = reactive({
-      active1: 1,
+      active1: 0,
       active2: 1,
       active3: 1,
     })
@@ -97,6 +107,13 @@ export default {
         console.log(changeList.theList)
       }
     })
+    const sideScroll = (e) => {
+      if(e.isFixed) {
+        document.getElementsByClassName('shop-food-side')[0].classList.remove('position')
+      } else {
+        document.getElementsByClassName('shop-food-side')[0].classList.add('position')
+      }
+    }
     onMounted(() => {
       window.scrollTo(0, 0)
     })
@@ -107,6 +124,7 @@ export default {
       ...toRefs(active),
       list,
       ...toRefs(changeList),
+      sideScroll,
     }
   },
   methods: {
@@ -180,14 +198,17 @@ export default {
       }
       .van-tabs {
         z-index: 0;
-        position: sticky;
-        top: 90px;
         .van-tab {
           flex: unset;
           min-width: 100px;
         }
-        .van-tabs__line {
-          background: #333;
+        .van-tabs__wrap {
+          position: sticky;
+          top: 90px;
+          z-index: 99;
+          .van-tabs__line {
+            background: #333;
+          }
         }
       }
     }
