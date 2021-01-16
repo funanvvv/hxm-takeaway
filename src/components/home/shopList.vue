@@ -1,5 +1,5 @@
 <template>
-  <van-sticky :offset-top="90">
+  <van-sticky :offset-top="80">
     <div class="home-shop-list-title">附近推荐</div>
   </van-sticky>
   <div class="shop-list-wrap">

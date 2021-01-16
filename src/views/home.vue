@@ -3,7 +3,7 @@
     <van-pull-refresh v-model="state.loading" @refresh="onRefresh">
       <top-status></top-status>
       <div class="main-wrap">
-        <van-sticky :offset-top="40">
+        <van-sticky :offset-top="30">
           <div id="home-search">
             <van-field
               v-model="state.value1"
@@ -74,6 +74,7 @@ export default {
       transition: .3s;
       padding: 10px;
       border-radius: 20px 20px 0 0;
+      background: #f7f7f7;
       .van-field {
         border-radius: 50px;
       }

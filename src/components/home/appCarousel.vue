@@ -108,6 +108,7 @@ export default {
     }
   }
   .swiper-pagination {
+    position: relative;
     .swiper-pagination-bullet-active {
       background: #444;
     }
