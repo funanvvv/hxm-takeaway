@@ -1,3 +1,4 @@
+import store from '../store/index'
 window.onscroll = function() {
   const nav = document.getElementsByClassName('nav-bar')[0]
 
@@ -11,9 +12,11 @@ window.onscroll = function() {
   if(dom2) {
     const val2 = dom2.getBoundingClientRect().top
     if(val == 0 && val2 != 90) {
+      store.commit('SET_NAVBAR_STATU', false)
       nav.style.setProperty('background-color', '#f7f7f7')
       dom2.style.setProperty('background-color', '#f7f7f7')
     } else if(val !=0 && val2 != 90) {
+      store.commit('SET_NAVBAR_STATU', true)
       nav.style.setProperty('background-color', '#333')
     }
   }

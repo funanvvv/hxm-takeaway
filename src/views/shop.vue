@@ -21,21 +21,30 @@
               <span>月销{{shop.sales}}</span>
             </div>
           </div>
-          <!-- <el-avatar 
-            shape="square" 
-            :size="60" 
-            :src="shop.avatarSrc">
-          </el-avatar> -->
+          <van-image
+            width="60"
+            height="60"
+            fit="cover"
+            src="https://img.yzcdn.cn/vant/cat.jpeg"
+          />
         </div>
         <!-- <div class="shop-discount-notice">
           优惠<br>
           公告{{}}
         </div> -->
         <div class="tab">
-          <van-sticky :offset-top="offsetTop" @scroll="sideScroll" v-show="active1==0">
+          <van-sticky
+            :offset-top="offsetTop"
+            @scroll="sideScroll"
+            v-show="active1==0"
+          >
             <food-side></food-side>
           </van-sticky>
-          <van-tabs v-model:active="active1" swipeable @change="switchTab">
+          <van-tabs
+            v-model:active="active1"
+            @change="switchTab"
+            swipeable
+          >
             <van-tab title="点餐">
               <food-list></food-list>
             </van-tab>
@@ -47,6 +56,12 @@
           </van-tabs>
         </div>
       </div>
+      <van-submit-bar
+        :price="3050"
+        button-text="提交订单"
+        @submit="onSubmit"
+        v-show="active1==0"
+      />
     </div>
   </div>
 </template>
@@ -85,8 +100,8 @@ export default {
       } else {
         document.getElementsByClassName('shop-food-side')[0].classList.add('position')
       }
-      if(e.scrollTop < 50) {
-        offsetTop.value = 190 - e.scrollTop
+      if(e.scrollTop < 70) {
+        offsetTop.value = 210 - e.scrollTop
       } else {
         offsetTop.value = 135
       }
@@ -165,6 +180,9 @@ export default {
       .shop-basic-info {
         @include flex-row(space-between);
         padding: 10px 10px 0;
+        .van-image__img {
+          border-radius: 7px;
+        }
         .basic-left {
           max-width: calc(100% - 60px);
           .title {

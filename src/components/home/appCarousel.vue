@@ -69,7 +69,7 @@ export default {
       console.log(index,'-' ,index2)
     }
     onMounted(() => {
-      const mySwiper = new Swiper('.home-swiper-container', {
+      new Swiper('.home-swiper-container', {
         loop: false,// 循环模式选项 
         pagination: {
           el: '.swiper-pagination',

@@ -30,12 +30,12 @@ export default {
   margin-left: 80px;
   overflow-y: auto;
   width: calc(100% - 80px);
+  padding-bottom: 100px;
   .shop-food-item {
     height: 80px;
     padding: 5px;
     margin: 5px;
     border-radius: 5px;
-    background: #f7f7f7;
   }
 }
 </style>

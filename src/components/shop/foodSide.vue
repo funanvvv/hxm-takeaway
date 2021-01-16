@@ -3,6 +3,7 @@
     <div 
       class="side-item"
       v-for="(item, index) in list.list"
+      :class="[index==list.index?'selected':'']"
       :key="index"
       @click="list.onChange(index)"
     >
@@ -26,13 +27,17 @@ export default {
 
 <style lang="scss">
 .shop-food-side {
+  font-size: 12px;
   float: left;
   width: 80px;
   height: 100%;
-  background: #fff;
+  background: #f7f7f7;
   .side-item {
     text-align: center;
     padding: 20px 0;
+    &.selected {
+      background: #fff;
+    }
   }
 }
 .position {
