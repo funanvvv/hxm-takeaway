@@ -84,7 +84,7 @@ export default {
       active1: 0,
     })
     const changeList = reactive({
-      list: [{title: '标题1', items: [{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'}]},{title: '标题2', items: [{name:'商品2'},{name:'商品1'},{name:'商品1'},{name:'商品1'}]}],
+      list: [{title: '标题1', items: [{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'}]},{title: '标题2', items: [{name:'商品2'},{name:'商品2'},{name:'商品2'},{name:'商品2'}]}],
       index: 0,
       onChange: (e) => {
         changeList.index = e
