@@ -95,10 +95,11 @@ export default {
       active.active1 = e
     }
     const sideScroll = (e) => {
+      const el = document.getElementsByClassName('shop-food-side')[0]
       if(e.isFixed) {
-        document.getElementsByClassName('shop-food-side')[0].classList.remove('position')
+        el.classList.remove('position')
       } else {
-        document.getElementsByClassName('shop-food-side')[0].classList.add('position')
+        el.classList.add('position')
       }
       if(e.scrollTop < 70) {
         offsetTop.value = 210 - e.scrollTop
@@ -109,6 +110,7 @@ export default {
 
     onMounted(() => {
       window.scrollTo(0, 0)
+      console.log(shop)
     })
 
     provide('list', changeList)

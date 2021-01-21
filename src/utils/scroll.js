@@ -1,5 +1,5 @@
 import store from '../store/index'
-window.onscroll = function() {
+export const scrollHome = function() {
   const nav = document.getElementsByClassName('nav-bar')[0]
 
   const dom = document.getElementById('home-search')
