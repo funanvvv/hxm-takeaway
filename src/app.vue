@@ -1,7 +1,15 @@
 <template>
-  <nav-bar></nav-bar>
-  <div id="scroll">
-    <router-view/>
+  <div id="main">
+    <!-- <keep-alive>
+      <router-view v-if='$route.meta.keepAlive'/>
+    </keep-alive>
+    <router-view v-if='!$route.meta.keepAlive'/> -->
+    <router-view v-slot="{ Component }">
+      <keep-alive>
+        <component v-if='$route.meta.keepAlive' :is="Component" />
+      </keep-alive>
+      <component v-if='!$route.meta.keepAlive' :is="Component" />
+    </router-view>
   </div>
   <tab-bar v-show="this.$route.meta.tabBar"></tab-bar>
 </template>
@@ -11,19 +19,13 @@ import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import '@/utils/scroll.js'
 import tabBar from '@/components/tabBar'
-import navBar from '@/components/navBar'
 
 export default {
   components: {
     tabBar,
-    navBar,
   },
   setup() {
     const store = useStore()
-    const setHeight = () => {
-      const el = document.getElementById("scroll")
-      el.style.height=document.documentElement.clientHeight - 95 + 'px'
-    }
 
     onMounted(() => {
       if(document.cookie) {
@@ -42,14 +44,8 @@ export default {
       }
     })
 
-    return { setHeight }
-  },
-  mounted() {
-    this.setHeight()
-    window.onresize = () => {
-      return (() => {
-        this.setHeight()
-      })()
+    return { 
+
     }
   },
 }
@@ -70,11 +66,8 @@ body {
   margin: 0;
   background: #333;
 }
-#scroll {
-  padding-top: 40px;
-}
 .container {
-  height: calc(100% + 55px);
+  min-height: calc(100vh - 55px);
 }
 .bottom-seat {
   height: 80px;

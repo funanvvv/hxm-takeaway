@@ -1,4 +1,5 @@
 <template>
+  <nav-bar color="#f7f7f7"></nav-bar>
   <div class="info-page container">
     <div class="basic-info">
       <van-image
@@ -29,7 +30,11 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { test } from '@/utils/axios'
 import { Toast } from 'vant'
+import navBar from '@/components/navBar'
 export default {
+  components: {
+    navBar
+  },
   setup() {
     const url = ref('https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png')
     const store = useStore()
@@ -61,7 +66,7 @@ export default {
 
 <style lang="scss">
 .info-page {
-  padding: 0 10px;
+  padding: 40px 10px 0;
   background: #f7f7f7;
   .basic-info {
     display: flex;

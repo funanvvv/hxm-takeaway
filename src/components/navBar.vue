@@ -3,28 +3,19 @@
 </template>
 
 <script>
+import { onMounted, ref } from 'vue'
 export default {
-  watch:{
-    $route(to, from){
-      if(to.path == '/home') {
-        document.getElementsByClassName('nav-bar')[0].style.transition='.3s'
-      }
-      if(to.path == '/search') {
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fff')
-      } else if(to.path == '/login') {
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#fafafa')
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '0s')
-      } else if(to.path == '/home' && from.path != '/shop') {
-        document.getElementsByClassName('nav-bar')[0].style.backgroundColor='#333'
-      } else if(to.path == '/home' && from.path == '/shop') {
-        if(this.$store.state.navbarStatu) {
-          document.getElementsByClassName('nav-bar')[0].style.backgroundColor='#333'
-        }
-      } else {
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('background-color', '#f7f7f7')
-        document.getElementsByClassName('nav-bar')[0].style.setProperty('transition', '0s')
-      }
+  props: {
+    color: {
+      default: '#f7f7f7'
     }
+  },
+  setup(props) {
+    const color = ref(props.color)
+
+    onMounted(() => {
+      document.getElementsByClassName('nav-bar')[0].style.backgroundColor = color.value
+    })
   },
 }
 </script>
@@ -35,7 +26,6 @@ export default {
   height: 40px;
   position: fixed;
   background-color: #333;
-  transition: .3s;
   z-index: 99;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="login-page">
+  <div class="login-page container">
     <van-icon name="cross" @click="this.$router.go(-1)" />
     <div class="body">
       <p class="title">花小猫</p>
@@ -139,7 +139,7 @@ export default {
 
 <style lang="scss">
 .login-page {
-  padding: 15px 20px;
+  padding: 40px 20px 15px;
   height: calc(100% + 25px);
   background: #fafafa;
   overflow-y: auto;

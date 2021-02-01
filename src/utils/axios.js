@@ -29,7 +29,7 @@ axios.interceptors.response.use((res) => {
       path: '/login'
     })
   }
-  return res
+  return Promise.resolve(res)
 }, (err) => {
   if (err.response) {
     return

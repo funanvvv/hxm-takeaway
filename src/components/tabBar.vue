@@ -17,7 +17,10 @@ export default {
 
     const goto = (e) => {
       router.push({
-        path: e
+        path: e,
+        query: {
+          from: 'tab'
+        }
       })
     }
 

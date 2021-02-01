@@ -1,4 +1,5 @@
 <template>
+  <nav-bar color="#333"></nav-bar>
   <div class="home-page">
     <van-pull-refresh v-model="state.loading" @refresh="onRefresh">
       <top-status></top-status>
@@ -7,10 +8,9 @@
           <div id="home-search">
             <van-field
               v-model="state.value1"
-              label="文本"
-              left-icon="smile-o"
-              right-icon="warning-o"
-              placeholder="显示图标"
+              right-icon="search"
+              :placeholder="defaultSearch"
+              @focus="$router.push({path:'/search'})"
             />
           </div>
         </van-sticky>
@@ -26,15 +26,17 @@
 <script>
 import { useRouter } from 'vue-router'
 import 'swiper/css/swiper.css'
+import navBar from '@/components/navBar'
 import topStatus from '@/components/home/topStatus.vue'
 import searchTags from '@/components/home/searchTags.vue'
 import appCarousel from '@/components/home/appCarousel.vue'
 import shopList from '@/components/home/shopList.vue'
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { scrollHome } from '@/utils/scroll'
 import { Toast } from 'vant';
 export default {
   components: {
+    navBar,
     searchTags,
     appCarousel,
     shopList,
@@ -42,6 +44,7 @@ export default {
   },
   setup() {
     const router = useRouter()
+    const defaultSearch = ref('搜索')
     const gotoSearch = () => {
       router.push({
         path: '/search'
@@ -61,13 +64,22 @@ export default {
     onMounted(() => {
       window.addEventListener('scroll', scrollHome)
     })
-    return { gotoSearch, onRefresh, state }
+    return {
+      defaultSearch,
+      gotoSearch,
+      onRefresh,
+      state,
+    }
   },
+  activated() {
+    document.getElementsByClassName('nav-bar')[0].style.backgroundColor = '#333'
+  }
 }
 </script>
 
 <style lang="scss">
 .home-page {
+  padding-top: 40px;
   .main-wrap {
     background: #f7f7f7;
     border-radius: 25px 25px 0 0;

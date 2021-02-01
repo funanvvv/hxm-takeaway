@@ -4,7 +4,6 @@ export default createStore({
   state: {
     phoneNumber: '',
     token: '',
-    navbarStatu: true,
   },
   mutations: {
     SET_USER_PHONE (state, value) {
@@ -13,9 +12,6 @@ export default createStore({
     SET_USER_TOKEN (state, value) {
       state.token = value
     },
-    SET_NAVBAR_STATU (state, value) {
-      state.navbarStatu = value
-    }
   },
   actions: {
   },
