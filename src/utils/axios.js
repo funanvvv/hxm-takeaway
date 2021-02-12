@@ -2,7 +2,7 @@ import axios from 'axios'
 import router from '@/router/index'
 
 let base = 'http://test.funanvvv.cn:8088'
-if (window.location.href.indexOf('localhost') != -1 || window.location.href.indexOf('192.168.20.62') != -1) {
+if (window.location.href.indexOf('localhost') != -1 || window.location.href.indexOf('192.168.0.106') != -1) {
   base = 'http://localhost:8088';
 }
 axios.defaults.timeout = 20000
@@ -50,4 +50,7 @@ export const checkVerifyCode = param => {
 //testToken
 export const test = param => {
   return axios.post(`${base}/sms/test`, param).then(res => res.data)
+}
+export const getShop = () => {
+  return axios.get(`${base}/shop/getList`).then(res => res.data)
 }

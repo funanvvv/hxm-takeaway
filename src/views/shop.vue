@@ -1,4 +1,5 @@
 <template>
+  <nav-bar color="#f7f7f7"></nav-bar>
   <div class="shop-page container">
     <div class="shop-main-wrap">
       <div class="options-bar">
@@ -70,12 +71,14 @@
 import { ref, onMounted, reactive, toRefs, provide } from 'vue'
 import foodList from '@/components/shop/foodList.vue'
 import foodSide from '@/components/shop/foodSide.vue'
+import navBar from '@/components/navBar'
 import { useRoute } from 'vue-router'
 
 export default {
   components: {
     foodList,
     foodSide,
+    navBar
   },
   setup() {
     const route = useRoute()
@@ -139,7 +142,7 @@ export default {
   background: #f7f7f7;
   .shop-main-wrap {
     position: relative;
-    top: 49px;
+    top: 99px;
     .options-bar {
       display: flex;
       width: 100%;

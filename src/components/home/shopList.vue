@@ -8,115 +8,54 @@
       <van-dropdown-item v-model="state.value2" :options="option2" />
     </van-dropdown-menu>
     <div class="list">
-      <lazy-component>
-        <div class="list-item" v-for="(item, index) in list" :key="index" @click="gotoShop(item)">
-          <van-image
-            width="4rem"
-            height="4rem"
-            fit="cover"
-            :src="item.avatarSrc"
-          />
-          <div class="item-content">
-            <div class="title">{{item.title}}</div>
-            <div class="score-sales-express">
-              <span class="emphasize">{{item.score}}分</span>
-              <span>月售{{item.sales}}</span>
-            </div>
-            <div class="score-sales-express">
-              <span>起送￥{{item.minConsumption}}</span>
-              <span>配送费￥{{item.expressFee}}</span>
-            </div>
-            <div class="describe">
-              <div class="tag">
-                "{{item.describe}}"
-              </div>
+      <div class="list-item" v-for="(item, index) in list" :key="index" @click="gotoShop(item)">
+        <van-image
+          width="4rem"
+          height="4rem"
+          fit="cover"
+          :src="item.avatarSrc"
+        />
+        <div class="item-content">
+          <div class="title">{{item.name}}</div>
+          <div class="score-sales-express">
+            <span class="emphasize">{{item.score}}分</span>
+            <span>月售{{item.sales}}</span>
+          </div>
+          <div class="score-sales-express">
+            <span>起送￥{{item.minConsumption}}</span>
+            <span>配送费￥{{item.expressFee}}</span>
+          </div>
+          <div class="describe">
+            <div class="tag">
+              "{{item.describe}}"
             </div>
           </div>
         </div>
-      </lazy-component>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getShop } from '@/utils/axios'
+import { touchBottom } from '@/utils/scroll'
 export default {
   setup() {
     const router = useRouter()
-    const list = ref([{
-      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/9e7c3d3b5c5945da69ca1129d76a2572.jpeg',
-      title: '诸葛掌柜焖汁鸡(高沙店)',
-      score: 4.8,
-      sales: 4147,
-      minConsumption: 20,
-      expressFee: 2,
-      describe: '招牌焖汁鸡米饭不错'
-    },{
-      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/下载.jfif',
-      title: '养生鼎·鲍汁捞饭·燕窝鱼翅·养生世家(英捷店)',
-      score: 4.9,
-      sales: 663,
-      minConsumption: 20,
-      expressFee: 6,
-      describe: '鲍汁山珍鸡丁捞饭是我喜欢的味道'
-    },{
-      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/9ce64d3c1cb9c2acdcbb54327d540663.jpeg',
-      title: '一纸鸡锡纸烧肉饭(高沙店)',
-      score: 4.9,
-      sales: 2964,
-      minConsumption: 0,
-      expressFee: 0,
-      describe: '口水鸡的食材很鲜,味道巨好吃'
-    },{
-      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
-      title: '半城外·牛杂小碗菜(高沙店)',
-      score: 4.9,
-      sales: 7011,
-      minConsumption: 20,
-      expressFee: 0,
-      describe: '大刀牛肉面味道很正宗'
-    },{
-      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
-      title: '半城外·牛杂小碗菜(高沙店)',
-      score: 4.9,
-      sales: 7011,
-      minConsumption: 20,
-      expressFee: 0,
-      describe: '大刀牛肉面味道很正宗'
-    },{
-      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
-      title: '半城外·牛杂小碗菜(高沙店)',
-      score: 4.9,
-      sales: 7011,
-      minConsumption: 20,
-      expressFee: 0,
-      describe: '大刀牛肉面味道很正宗'
-    },{
-      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
-      title: '半城外·牛杂小碗菜(高沙店)',
-      score: 4.9,
-      sales: 7011,
-      minConsumption: 20,
-      expressFee: 0,
-      describe: '大刀牛肉面味道很正宗'
-    },{
-      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
-      title: '半城外·牛杂小碗菜(高沙店)',
-      score: 4.9,
-      sales: 7011,
-      minConsumption: 20,
-      expressFee: 0,
-      describe: '大刀牛肉面味道很正宗'
-    },{
-      avatarSrc: 'http://test.funanvvv.cn/bing/shop-avatar/u=1745457937,3173313323&fm=26&gp=0.jpg',
-      title: '半城外·牛杂小碗菜(高沙店)',
-      score: 4.9,
-      sales: 7011,
-      minConsumption: 20,
-      expressFee: 0,
-      describe: '大刀牛肉面味道很正宗'
-    }])
+    const list = ref([])
+    const getData = (endNum) => {
+      getShop(endNum).then((res) => {
+        if(res.code == '0') {
+          if(!endNum) {
+            list.value = res.data
+          } else {
+            return
+          }
+        }
+      })
+    }
     const gotoShop = (e) => {
       e = JSON.stringify(e)
       router.push({
@@ -134,12 +73,17 @@ export default {
       { text: '全部商品', value: 0 },
       { text: '新款商品', value: 1 },
       { text: '活动商品', value: 2 },
-    ];
+    ]
     const option2 = [
       { text: '默认排序', value: 'a' },
       { text: '好评排序', value: 'b' },
       { text: '销量排序', value: 'c' },
-    ];
+    ]
+
+    onMounted(() => {
+      getData()
+    })
+
     return {
       state,
       option1,
@@ -147,6 +91,12 @@ export default {
       list,
       gotoShop,
     };
+  },
+  activated() {
+    window.addEventListener('scroll', touchBottom)
+  },
+  deactivated() {
+    window.removeEventListener('scroll', touchBottom)
   }
 }
 </script>

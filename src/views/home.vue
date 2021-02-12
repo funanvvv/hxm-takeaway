@@ -32,7 +32,7 @@ import searchTags from '@/components/home/searchTags.vue'
 import appCarousel from '@/components/home/appCarousel.vue'
 import shopList from '@/components/home/shopList.vue'
 import { onMounted, reactive, ref } from 'vue'
-import { scrollHome } from '@/utils/scroll'
+import { dynamicNav } from '@/utils/scroll'
 import { Toast } from 'vant';
 export default {
   components: {
@@ -62,7 +62,7 @@ export default {
       }, 1000);
     };
     onMounted(() => {
-      window.addEventListener('scroll', scrollHome)
+      window.addEventListener('scroll', dynamicNav)
     })
     return {
       defaultSearch,

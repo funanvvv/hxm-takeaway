@@ -1,9 +1,5 @@
 <template>
   <div id="main">
-    <!-- <keep-alive>
-      <router-view v-if='$route.meta.keepAlive'/>
-    </keep-alive>
-    <router-view v-if='!$route.meta.keepAlive'/> -->
     <router-view v-slot="{ Component }">
       <keep-alive>
         <component v-if='$route.meta.keepAlive' :is="Component" />
