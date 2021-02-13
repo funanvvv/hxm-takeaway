@@ -13,7 +13,7 @@ import {
   PasswordInput,
   NumberKeyboard,
   Toast, Button,
-  SubmitBar,
+  SubmitBar, Loading
 } from 'vant';
 
 createApp(App)
@@ -24,5 +24,5 @@ createApp(App)
   .use(Sidebar).use(SidebarItem).use(Sticky)
   .use(Field).use(Lazyload, {lazyComponent: true})
   .use(Button).use(PasswordInput).use(NumberKeyboard)
-  .use(Toast).use(SubmitBar)
+  .use(Toast).use(SubmitBar).use(Loading)
   .mount('#app')

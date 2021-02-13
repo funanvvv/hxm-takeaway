@@ -1,6 +1,6 @@
 <template>
   <nav-bar color="#333"></nav-bar>
-  <div class="home-page">
+  <div class="home-page container">
     <van-pull-refresh v-model="state.loading" @refresh="onRefresh">
       <top-status></top-status>
       <div class="main-wrap">

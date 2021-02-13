@@ -31,6 +31,9 @@ axios.interceptors.response.use((res) => {
   }
   return Promise.resolve(res)
 }, (err) => {
+  router.push({
+    path: '/error'
+  })
   if (err.response) {
     return
   }
@@ -53,4 +56,10 @@ export const test = param => {
 }
 export const getShop = () => {
   return axios.get(`${base}/shop/getList`).then(res => res.data)
+}
+export const getClass = id => {
+  return axios.get(`${base}/shop/getClass/?id=${id}`).then(res => res.data)
+}
+export const getFood = id => {
+  return axios.get(`${base}/shop/getFood/?id=${id}`).then(res => res.data)
 }

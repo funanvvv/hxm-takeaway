@@ -2,12 +2,12 @@
   <div class="shop-food-side position">
     <div 
       class="side-item"
-      v-for="(item, index) in list.list"
-      :class="[index==list.index?'selected':'']"
+      v-for="(item, index) in list.class"
+      :class="[item.id==list.index?'selected':'']"
       :key="index"
       @click="list.onChange(index)"
     >
-      {{item.title}}
+      {{item.name}}
     </div>
   </div>
 </template>

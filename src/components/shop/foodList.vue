@@ -1,11 +1,10 @@
 <template>
   <div class="shop-food-list">
     <div
-      class="shop-food-item"
-      v-for="(item, index) in list.list[list.index].items"
+      v-for="(item, index) in list.list"
       :key="index"
     >
-      {{item.name}}
+      <div class="shop-food-item" v-if="item.cid==list.index">{{item.name}}</div>
     </div>
   </div>
 </template>

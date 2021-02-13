@@ -73,6 +73,7 @@ import foodList from '@/components/shop/foodList.vue'
 import foodSide from '@/components/shop/foodSide.vue'
 import navBar from '@/components/navBar'
 import { useRoute } from 'vue-router'
+import { getClass, getFood } from '@/utils/axios'
 
 export default {
   components: {
@@ -87,10 +88,12 @@ export default {
       active1: 0,
     })
     const changeList = reactive({
-      list: [{title: '标题1', items: [{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'},{name:'商品1'}]},{title: '标题2', items: [{name:'商品2'},{name:'商品2'},{name:'商品2'},{name:'商品2'}]}],
+      class: [],
+      list: [],
       index: 0,
       onChange: (e) => {
-        changeList.index = e
+        changeList.index = changeList.class[e].id
+        console.log(changeList.class[e].id)
       }
     })
     const offsetTop = ref(140)
@@ -110,10 +113,21 @@ export default {
         offsetTop.value = 135
       }
     }
+    const onSubmit = () => {
+      return
+    }
 
     onMounted(() => {
       window.scrollTo(0, 0)
-      console.log(shop)
+      getClass(shop.value.id).then((res) => {
+        changeList.class = res.data
+        changeList.index = res.data[0].id
+        console.log(res)
+      })
+      getFood(shop.value.id).then((res) => {
+        changeList.list = res.data
+        console.log(res)
+      })
     })
 
     provide('list', changeList)
@@ -126,6 +140,7 @@ export default {
       ...toRefs(active),
       ...toRefs(changeList),
       sideScroll,
+      onSubmit,
     }
   },
   methods: {
@@ -184,7 +199,7 @@ export default {
       }
       .shop-basic-info {
         @include flex-row(space-between);
-        padding: 10px 10px 0;
+        padding: 6px 10px 0;
         .van-image__img {
           border-radius: 7px;
         }

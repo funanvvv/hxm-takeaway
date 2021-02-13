@@ -33,6 +33,12 @@
         </div>
       </div>
     </div>
+    <div class="loading" v-if="state.loading == 1">
+      <van-loading />
+    </div>
+    <div class="fail" v-if="state.loading == -1">
+      加载失败
+    </div>
   </div>
 </template>
 
@@ -44,8 +50,14 @@ import { touchBottom } from '@/utils/scroll'
 export default {
   setup() {
     const router = useRouter()
+    const state = reactive({
+      loading: 1,
+      value1: 0,
+      value2: 'a',
+    });
     const list = ref([])
     const getData = (endNum) => {
+      state.loading = 1
       getShop(endNum).then((res) => {
         if(res.code == '0') {
           if(!endNum) {
@@ -53,6 +65,9 @@ export default {
           } else {
             return
           }
+          state.loading = 2
+        } else {
+          state.loading = -1
         }
       })
     }
@@ -65,10 +80,6 @@ export default {
         }
       })
     }
-    const state = reactive({
-      value1: 0,
-      value2: 'a',
-    });
     const option1 = [
       { text: '全部商品', value: 0 },
       { text: '新款商品', value: 1 },
@@ -115,6 +126,7 @@ export default {
   transition: .3s;
 }
 .shop-list-wrap {
+  min-height: 300px;
   .list {
     padding: 0 15px 10px 15px;
     .list-item {
@@ -160,6 +172,10 @@ export default {
         }
       }
     }
+  }
+  .loading {
+    display: flex;
+    justify-content: center;
   }
 }
 </style>
