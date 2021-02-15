@@ -33,17 +33,20 @@
         </div>
       </div>
     </div>
-    <div class="loading" v-if="state.loading == 1">
+    <div class="bottom-tip" v-if="state.loading == 1">
       <van-loading />
     </div>
-    <div class="fail" v-if="state.loading == -1">
+    <div class="bottom-tip fail" v-if="state.loading == -1">
       加载失败
+    </div>
+    <div class="bottom-tip end" v-if="state.loading == 3">
+      已经到底了
     </div>
   </div>
 </template>
 
 <script>
-import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, onMounted, onActivated, onDeactivated } from 'vue'
 import { useRouter } from 'vue-router'
 import { getShop } from '@/utils/axios'
 import { touchBottom } from '@/utils/scroll'
@@ -51,25 +54,29 @@ export default {
   setup() {
     const router = useRouter()
     const state = reactive({
-      loading: 1,
+      loading: -2, // 1显示加载，2不显示，3显示到底，-1显示加载失败
       value1: 0,
       value2: 'a',
     });
     const list = ref([])
     const getData = (endNum) => {
-      state.loading = 1
-      getShop(endNum).then((res) => {
-        if(res.code == '0') {
-          if(!endNum) {
-            list.value = res.data
+      if(state.loading == 3) {
+        return
+      } else if (state.loading != 1) {
+        state.loading = 1
+        getShop(endNum).then((res) => {
+          console.log(res)
+          if(res.code == '0') {
+            list.value = list.value.concat(res.data)
+            state.loading = 2
+            if(res.data.length == 0) {
+              state.loading = 3
+            }
           } else {
-            return
+            state.loading = -1
           }
-          state.loading = 2
-        } else {
-          state.loading = -1
-        }
-      })
+        })
+      }
     }
     const gotoShop = (e) => {
       e = JSON.stringify(e)
@@ -80,19 +87,47 @@ export default {
         }
       })
     }
-    const option1 = [
-      { text: '全部商品', value: 0 },
-      { text: '新款商品', value: 1 },
-      { text: '活动商品', value: 2 },
-    ]
-    const option2 = [
-      { text: '默认排序', value: 'a' },
-      { text: '好评排序', value: 'b' },
-      { text: '销量排序', value: 'c' },
-    ]
+    const option1 = [{ 
+      text: '全部商品', value: 0
+    },{ 
+      text: '新款商品', value: 1
+    },{
+      text: '活动商品', value: 2 
+    },]
+    const option2 = [{
+      text: '默认排序', value: 'a'
+    },{
+      text: '好评排序', value: 'b'
+    },{
+      text: '销量排序', value: 'c'
+    },]
 
     onMounted(() => {
-      getData()
+      getData(0)
+    })
+
+    // 触底加载事件
+    const test2 = () => {
+      getData(list.value.length)
+    }
+    // 触底防抖
+    let timer = null
+    const emitTouchBottom = () => {
+      if(timer) {
+        clearTimeout(timer)
+      }
+      timer = setTimeout(function() {
+        touchBottom(test2)
+        timer = null
+      },50)
+    }
+
+    onActivated(() => {
+      window.addEventListener('scroll', emitTouchBottom)
+    })
+
+    onDeactivated(() => {
+      window.removeEventListener('scroll', emitTouchBottom)
     })
 
     return {
@@ -103,12 +138,6 @@ export default {
       gotoShop,
     };
   },
-  activated() {
-    window.addEventListener('scroll', touchBottom)
-  },
-  deactivated() {
-    window.removeEventListener('scroll', touchBottom)
-  }
 }
 </script>
 
@@ -173,9 +202,10 @@ export default {
       }
     }
   }
-  .loading {
+  .bottom-tip {
     display: flex;
     justify-content: center;
+    color: #999;
   }
 }
 </style>

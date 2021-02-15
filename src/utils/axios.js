@@ -54,8 +54,8 @@ export const checkVerifyCode = param => {
 export const test = param => {
   return axios.post(`${base}/sms/test`, param).then(res => res.data)
 }
-export const getShop = () => {
-  return axios.get(`${base}/shop/getList`).then(res => res.data)
+export const getShop = param => {
+  return axios.get(`${base}/shop/getList/?num=${param}`).then(res => res.data)
 }
 export const getClass = id => {
   return axios.get(`${base}/shop/getClass/?id=${id}`).then(res => res.data)

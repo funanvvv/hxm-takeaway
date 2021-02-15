@@ -19,15 +19,15 @@ export const dynamicNav = () => {
   }
 }
 
-export const touchBottom = () => {
-  //滚动条上端距离顶部的距离
-  const scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
-  //是可视区的高度
-  const windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
-  //是滚动条的总高度（当前可滚动的页面的总高度）
-  const scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
-  //滚动条到底部时触发
+export const touchBottom = (targetFn) => {
+  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop; //滚动条上端距离顶部的距离
+  const windowHeight = document.documentElement.clientHeight || document.body.clientHeight; //是可视区的高度
+  const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight; //是滚动条的总高度（当前可滚动的页面的总高度）
   if(scrollTop+windowHeight>=scrollHeight-1){
-      console.log('滚动到底部')
+    try {
+      targetFn()
+    } catch(e) {
+      return
+    }
   }
 }
