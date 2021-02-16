@@ -11,32 +11,11 @@
 <script>
 import { ref } from 'vue'
 export default {
-  setup() {
-    const tags = ref([{
-      hot: true,
-      id: 1,
-      content: "定节日鲜花"
-    },{
-      hot: true,
-      id: 2,
-      content: "百亿补贴"
-    },{
-      hot: false,
-      id: 3,
-      content: "汉堡"
-    },{
-      hot: false,
-      id: 4,
-      content: "奶茶"
-    },{
-      hot: false,
-      id: 5,
-      content: "黄焖鸡"
-    },{
-      hot: false,
-      id: 6,
-      content: "蛋糕"
-    }])
+  props: {
+    data: Array
+  },
+  setup(props) {
+    const tags = ref(props.data)
     return { tags }
   }
 }
@@ -59,7 +38,7 @@ export default {
     }
     &.tag-hot {
       padding-left: 20px;
-      background: rgb(255, 238, 215) url('../../assets/hot.png') no-repeat 7% 50%;
+      background: rgb(255, 238, 215) url('../assets/hot.png') no-repeat 7% 50%;
       background-size: 13px;
       color: rgb(255, 96, 57);
     }

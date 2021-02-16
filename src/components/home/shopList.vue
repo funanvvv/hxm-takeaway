@@ -8,30 +8,7 @@
       <van-dropdown-item v-model="state.value2" :options="option2" />
     </van-dropdown-menu>
     <div class="list">
-      <div class="list-item" v-for="(item, index) in list" :key="index" @click="gotoShop(item)">
-        <van-image
-          width="4rem"
-          height="4rem"
-          fit="cover"
-          :src="item.avatarSrc"
-        />
-        <div class="item-content">
-          <div class="title">{{item.name}}</div>
-          <div class="score-sales-express">
-            <span class="emphasize">{{item.score}}分</span>
-            <span>月售{{item.sales}}</span>
-          </div>
-          <div class="score-sales-express">
-            <span>起送￥{{item.minConsumption}}</span>
-            <span>配送费￥{{item.expressFee}}</span>
-          </div>
-          <div class="describe">
-            <div class="tag">
-              "{{item.describe}}"
-            </div>
-          </div>
-        </div>
-      </div>
+      <card v-for="(item, index) in list" :key="index" :data="item" @click="gotoShop(item)"></card>
     </div>
     <div class="bottom-tip" v-if="state.loading == 1">
       <van-loading />
@@ -50,7 +27,11 @@ import { ref, reactive, onMounted, onActivated, onDeactivated } from 'vue'
 import { useRouter } from 'vue-router'
 import { getShop } from '@/utils/axios'
 import { touchBottom } from '@/utils/scroll'
+import Card from '../shopCard.vue'
 export default {
+  components: {
+    Card
+  },
   setup() {
     const router = useRouter()
     const state = reactive({
@@ -65,7 +46,6 @@ export default {
       } else if (state.loading != 1) {
         state.loading = 1
         getShop(endNum).then((res) => {
-          console.log(res)
           if(res.code == '0') {
             list.value = list.value.concat(res.data)
             state.loading = 2
@@ -158,49 +138,6 @@ export default {
   min-height: 300px;
   .list {
     padding: 0 15px 10px 15px;
-    .list-item {
-      @include flex();
-      background: #fff;
-      border-radius: 10px;
-      padding: 10px;
-      &:not(:first-child) {
-        margin-top: 10px;
-      }
-      .item-content {
-        padding-left: 10px;
-        max-width: calc(100% - 4rem - 20px);
-        .title {
-          font-weight: 1000;
-          text-overflow:ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-        }
-        .score-sales-express {
-          span {
-            font-size: 12px;
-            color: #666;
-            &:first-child {
-              margin-right: 10px;
-            }
-          }
-          .emphasize {
-            font-weight: bold;
-            color: rgb(255, 96, 57);
-          }
-        }
-        .describe {
-          @include flex();
-          .tag {
-            margin-top: 5px;
-            font-size: 12px;
-            background:  rgb(255, 238, 215);
-            color: rgb(255, 96, 57);
-            padding: 1px 8px;
-            border-radius: 5px;
-          }
-        }
-      }
-    }
   }
   .bottom-tip {
     display: flex;

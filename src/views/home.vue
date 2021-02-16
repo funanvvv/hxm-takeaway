@@ -14,7 +14,7 @@
             />
           </div>
         </van-sticky>
-        <search-tags></search-tags>
+        <search-tags :data="tags"></search-tags>
         <app-carousel></app-carousel>
         <shop-list></shop-list>
       </div>
@@ -28,7 +28,7 @@ import { useRouter } from 'vue-router'
 import 'swiper/css/swiper.css'
 import navBar from '@/components/navBar'
 import topStatus from '@/components/home/topStatus.vue'
-import searchTags from '@/components/home/searchTags.vue'
+import searchTags from '@/components/searchTags.vue'
 import appCarousel from '@/components/home/appCarousel.vue'
 import shopList from '@/components/home/shopList.vue'
 import { onMounted, reactive, ref } from 'vue'
@@ -44,6 +44,31 @@ export default {
   },
   setup() {
     const router = useRouter()
+    const tags = ref([{
+      hot: true,
+      id: 1,
+      content: "定节日鲜花"
+    },{
+      hot: true,
+      id: 2,
+      content: "百亿补贴"
+    },{
+      hot: false,
+      id: 3,
+      content: "汉堡"
+    },{
+      hot: false,
+      id: 4,
+      content: "奶茶"
+    },{
+      hot: false,
+      id: 5,
+      content: "黄焖鸡"
+    },{
+      hot: false,
+      id: 6,
+      content: "蛋糕"
+    }])
     const defaultSearch = ref('搜索')
     const gotoSearch = () => {
       router.push({
@@ -66,6 +91,7 @@ export default {
     })
     return {
       defaultSearch,
+      tags,
       gotoSearch,
       onRefresh,
       state,
