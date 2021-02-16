@@ -26,12 +26,12 @@
 <script>
 import { useRouter } from 'vue-router'
 import 'swiper/css/swiper.css'
-import navBar from '@/components/navBar'
+import navBar from '@/components/common/navBar'
 import topStatus from '@/components/home/topStatus.vue'
-import searchTags from '@/components/searchTags.vue'
+import searchTags from '@/components/common/searchTags.vue'
 import appCarousel from '@/components/home/appCarousel.vue'
 import shopList from '@/components/home/shopList.vue'
-import { onMounted, reactive, ref } from 'vue'
+import { onActivated, onDeactivated, reactive, ref } from 'vue'
 import { dynamicNav } from '@/utils/scroll'
 import { Toast } from 'vant';
 export default {
@@ -86,9 +86,15 @@ export default {
         state.count++;
       }, 1000);
     };
-    onMounted(() => {
+
+    onActivated(() => {
       window.addEventListener('scroll', dynamicNav)
+      document.getElementsByClassName('nav-bar')[0].style.backgroundColor = '#333'
     })
+    onDeactivated(() => {
+      window.removeEventListener('scroll', dynamicNav)
+    })
+
     return {
       defaultSearch,
       tags,
@@ -97,9 +103,6 @@ export default {
       state,
     }
   },
-  activated() {
-    document.getElementsByClassName('nav-bar')[0].style.backgroundColor = '#333'
-  }
 }
 </script>
 

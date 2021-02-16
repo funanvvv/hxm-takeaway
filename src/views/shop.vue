@@ -71,7 +71,7 @@
 import { ref, onMounted, reactive, toRefs, provide } from 'vue'
 import foodList from '@/components/shop/foodList.vue'
 import foodSide from '@/components/shop/foodSide.vue'
-import navBar from '@/components/navBar'
+import navBar from '@/components/common/navBar'
 import { useRoute } from 'vue-router'
 import { getClass, getFood } from '@/utils/axios'
 
@@ -93,7 +93,6 @@ export default {
       index: 0,
       onChange: (e) => {
         changeList.index = changeList.class[e].id
-        console.log(changeList.class[e].id)
       }
     })
     const offsetTop = ref(140)
@@ -122,11 +121,9 @@ export default {
       getClass(shop.value.id).then((res) => {
         changeList.class = res.data
         changeList.index = res.data[0].id
-        console.log(res)
       })
       getFood(shop.value.id).then((res) => {
         changeList.list = res.data
-        console.log(res)
       })
     })
 

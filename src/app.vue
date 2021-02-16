@@ -14,7 +14,7 @@
 import { onMounted } from 'vue'
 import { useStore } from 'vuex'
 import '@/utils/scroll.js'
-import tabBar from '@/components/tabBar'
+import tabBar from '@/components/common/tabBar'
 
 export default {
   components: {
@@ -68,5 +68,7 @@ body {
 .bottom-seat {
   height: 80px;
   background: #f7f7f7;
+  position: relative;
+  top: -1px;
 }
 </style>

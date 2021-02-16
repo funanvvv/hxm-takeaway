@@ -56,34 +56,34 @@ export default {
   }
   .main-page {
     background-position: 50% 24%;
-    background-image: url('../assets/cat.png');
+    background-image: url('../../assets/cat.png');
   }
   .main-page-selected {
     color: #333;
     background-position: 50% 24%;
-    background-image: url('../assets/cat-selected.png');
+    background-image: url('../../assets/cat-selected.png');
   }
   .order-page {
     background-size: 30px;
     background-position: 50% 14%;
-    background-image: url('../assets/order.png');
+    background-image: url('../../assets/order.png');
   }
   .order-page-selected {
     color: #333;
     background-size: 30px;
     background-position: 50% 14%;
-    background-image: url('../assets/order-selected.png');
+    background-image: url('../../assets/order-selected.png');
   }
   .info-page {
     background-size: 24px;
     background-position: 50% 23%;
-    background-image: url('../assets/info.png');
+    background-image: url('../../assets/info.png');
   }
   .info-page-selected {
     color: #333;
     background-size: 24px;
     background-position: 50% 23%;
-    background-image: url('../assets/info-selected.png');
+    background-image: url('../../assets/info-selected.png');
   }
 }
 </style>

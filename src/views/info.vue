@@ -30,7 +30,7 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { test } from '@/utils/axios'
 import { Toast } from 'vant'
-import navBar from '@/components/navBar'
+import navBar from '@/components/common/navBar'
 export default {
   components: {
     navBar

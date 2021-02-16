@@ -8,17 +8,9 @@
       <van-dropdown-item v-model="state.value2" :options="option2" />
     </van-dropdown-menu>
     <div class="list">
-      <card v-for="(item, index) in list" :key="index" :data="item" @click="gotoShop(item)"></card>
+      <card :data="list"></card>
     </div>
-    <div class="bottom-tip" v-if="state.loading == 1">
-      <van-loading />
-    </div>
-    <div class="bottom-tip fail" v-if="state.loading == -1">
-      加载失败
-    </div>
-    <div class="bottom-tip end" v-if="state.loading == 3">
-      已经到底了
-    </div>
+    <loading-status :data='state.loading'></loading-status>
   </div>
 </template>
 
@@ -27,10 +19,12 @@ import { ref, reactive, onMounted, onActivated, onDeactivated } from 'vue'
 import { useRouter } from 'vue-router'
 import { getShop } from '@/utils/axios'
 import { touchBottom } from '@/utils/scroll'
-import Card from '../shopCard.vue'
+import Card from '@/components/common/shopCard.vue'
+import LoadingStatus from '@/components/common/loadingStatus'
 export default {
   components: {
-    Card
+    Card,
+    LoadingStatus,
   },
   setup() {
     const router = useRouter()
@@ -136,14 +130,6 @@ export default {
 }
 .shop-list-wrap {
   min-height: 300px;
-  .list {
-    padding: 0 15px 10px 15px;
-  }
-  .bottom-tip {
-    display: flex;
-    justify-content: center;
-    color: #999;
-  }
 }
 </style>
 <style lang="scss">

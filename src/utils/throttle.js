@@ -10,7 +10,7 @@ export const throttle = function(fn,wait){
   }
 }
 
-function debounce(fn, wait) {
+export const debounce = function(fn, wait) {
   let timer;
   return function() {
     if (timer) {

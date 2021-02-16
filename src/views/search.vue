@@ -7,6 +7,7 @@
           v-model="value"
           right-icon="search"
           autofocus
+          @update:model-value="search"
         />
       </div>
     </div>
@@ -21,7 +22,8 @@
 </template>
 
 <script>
-import searchTags from '@/components/searchTags'
+import searchTags from '@/components/common/searchTags'
+import { debounce } from '@/utils/throttle'
 import { ref } from 'vue'
 export default {
   components: {
@@ -57,9 +59,18 @@ export default {
       id: 9,
       content: "鸡架"
     }])
+    let timer = null
+    const search = () => {
+      if(timer) {
+        clearTimeout(timer)
+      }
+      timer = setTimeout(() => {console.log(1)}, 1000)
+    }
     return {
       value,
       tags,
+      search,
+      debounce
     }
   },
   methods: {
