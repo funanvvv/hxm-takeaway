@@ -15,7 +15,7 @@ export default {
   setup() {
     const list = inject('list')
     onMounted(() => {
-      console.log(list.list)
+      return
     })
     return {
       list,

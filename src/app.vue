@@ -31,7 +31,7 @@ export default {
           cookiePhone = document.cookie.split("phoneNumber")[1].split(";")[0].split("=")[1]
           cookieToken = document.cookie.split("token")[1].split(";")[0].split("=")[1]
         } catch(e) {
-          console.log(e)
+          return
         }
         if(cookiePhone) {
           store.commit('SET_USER_PHONE', cookiePhone)

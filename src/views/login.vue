@@ -102,7 +102,6 @@ export default {
           phoneNumber: verify.phoneNumber,
           verifyCode: verifyCode.value
         }).then((res) => {
-          console.log(res)
           if(res.code == '0') {
             Toast.success(res.msg)
             const d = new Date();

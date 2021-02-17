@@ -65,8 +65,8 @@ export default {
     },{
       id:2.2
     }]])
-    const routeChange = (index, index2) => {
-      console.log(index,'-' ,index2)
+    const routeChange = () => {
+      return
     }
     onMounted(() => {
       new Swiper('.home-swiper-container', {

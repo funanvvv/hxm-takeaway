@@ -64,7 +64,7 @@ export default {
       if(timer) {
         clearTimeout(timer)
       }
-      timer = setTimeout(() => {console.log(1)}, 1000)
+      timer = setTimeout(() => {return}, 1000)
     }
     return {
       value,
