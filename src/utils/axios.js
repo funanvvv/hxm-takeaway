@@ -1,10 +1,11 @@
 import axios from 'axios'
 import router from '@/router/index'
 
-let base = 'http://test.funanvvv.cn:8088'
-if (window.location.href.indexOf('localhost') != -1 || window.location.href.indexOf('192.168.0.106') != -1) {
-  base = 'http://localhost:8088';
-}
+const base = 'http://test.funanvvv.cn:8088'
+// const base = 'http://localhost:8088';
+// if (window.location.href.indexOf('localhost') != -1 || window.location.href.indexOf('192.168.0.106') != -1) {
+//   base = 'http://localhost:8088';
+// }
 axios.defaults.timeout = 20000
 
 axios.interceptors.request.use((config) => {
