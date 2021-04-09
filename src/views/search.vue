@@ -21,13 +21,13 @@
         </van-field>
       </div>
     </div>
-    <div class="before-search">
+    <div class="before-search" v-if="step == 1">
       <div class="title">历史搜索</div>
       <search-tags :data="tags" warn="无搜索记录"></search-tags>
-      <loading-status :data="load"></loading-status>
     </div>
-    <div class="after-search">
-
+    <loading-status :data="load"></loading-status>
+    <div class="after-search" v-if="step == 2">
+      <shop-card :data='searchList'></shop-card>
     </div>
   </div>
 </template>
@@ -35,34 +35,46 @@
 <script>
 import searchTags from '@/components/common/searchTags'
 import loadingStatus from '@/components/common/loadingStatus'
+import shopCard from '@/components/common/shopCard'
+import { searchShop } from '@/utils/axios'
 import { ref } from 'vue'
 export default {
   components: {
     searchTags,
-    loadingStatus
+    loadingStatus,
+    shopCard
   },
   setup() {
     const value = ref('')
     const load = ref(null)
     const tags = ref(JSON.parse(localStorage.getItem('searchHistory')) || [])
+    const step = ref(1)
+    const searchList = ref(null)
     let timer = null
     const search = tag => {
       load.value = 1
+      step.value = 2
       if(timer) {
         clearTimeout(timer)
       }
       timer = setTimeout(() => {
         const key = value.value
-        if(key.length) {
-          console.log(key)
+        if(key) {
+          searchShop(key).then(res => {
+            searchList.value = res.data
+            if(!res.data.length) load.value = '找不到你想要的T_T'
+            else load.value = null
+          })
           if(tag) {
-            tags.value = tags.value.filter(e => e != key)
+            tags.value = tags.value.filter(e => e.content != key)
             tags.value.unshift({content: key})
             if(tags.value.length > 20) tags.value.pop()
             localStorage.setItem('searchHistory', JSON.stringify(tags.value))
           }
+        } else if(key == '') {
+          step.value = 1
+          load.value = null
         }
-        load.value = null
       }, 1000)
     }
     return {
@@ -70,6 +82,8 @@ export default {
       load,
       tags,
       search,
+      step,
+      searchList
     }
   },
   methods: {
@@ -114,6 +128,10 @@ export default {
     transform: rotate(90deg);
     padding: 0 10px;
     font-size: 20px;
+  }
+  .van-button {
+    background-color: #444;
+    border-color: #444;
   }
 }
 </style>

@@ -31,12 +31,11 @@ export default {
   float: left;
   width: 80px;
   height: 100%;
-  background: #f7f7f7;
   .side-item {
     text-align: center;
     padding: 20px 0;
     &.selected {
-      background: #fff;
+      background: #f7f7f7;
     }
   }
 }

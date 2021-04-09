@@ -1,8 +1,8 @@
 import axios from 'axios'
 import router from '@/router/index'
 
-const base = 'http://test.funanvvv.cn:8088'
-// const base = 'http://localhost:8088';
+// const base = 'http://test.funanvvv.cn:8088'
+const base = 'http://localhost:8088';
 // if (window.location.href.indexOf('localhost') != -1 || window.location.href.indexOf('192.168.0.106') != -1) {
 //   base = 'http://localhost:8088';
 // }
@@ -63,4 +63,7 @@ export const getClass = id => {
 }
 export const getFood = id => {
   return axios.get(`${base}/shop/getFood/?id=${id}`).then(res => res.data)
+}
+export const searchShop = param => {
+  return axios.post(`${base}/shop/searchShop/`, {keyword: param}).then(res => res.data)
 }

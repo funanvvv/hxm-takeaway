@@ -3,11 +3,14 @@
     <div class="tip" v-if="loading == 1">
       <van-loading />
     </div>
-    <div class="tip fail" v-if="loading == -1">
+    <div class="tip fail" v-else-if="loading == -1">
       加载失败
     </div>
-    <div class="tip end" v-if="loading == 3">
+    <div class="tip end" v-else-if="loading == 3">
       已经到底了
+    </div>
+    <div class="tip end" v-else>
+      {{loading}}
     </div>
   </div>
 </template>
