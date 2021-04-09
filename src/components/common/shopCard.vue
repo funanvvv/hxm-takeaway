@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <div class="list-item" v-for="(shop, index) in shops" :key="index">
+    <div class="list-item" v-for="(shop, index) in shops" :key="index" @click="selected(index)">
       <van-image
         width="4rem"
         height="4rem"
@@ -29,17 +29,29 @@
 
 <script>
 import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 export default {
   props: {
     data: Array
   },
   setup(props){
+    const router = useRouter()
     const shops = ref(props.data)
+    const selected = index => {
+      const e = JSON.stringify(shops.value[index])
+      router.push({
+        path: '/shop',
+        query: {
+          shop: e
+        }
+      })
+    }
     watch(props, (val) => {
       shops.value = val.data
     })
     return {
-      shops
+      shops,
+      selected
     }
   }
 }

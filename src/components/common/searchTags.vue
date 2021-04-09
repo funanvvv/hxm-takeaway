@@ -5,6 +5,7 @@
     >
       {{item.content}}
     </div>
+    <div class="warn-text" v-if="!tags || !tags.length">{{warnMessage}}</div>
   </div>
 </template>
 
@@ -12,11 +13,13 @@
 import { ref } from 'vue'
 export default {
   props: {
-    data: Array
+    data: Array,
+    warn: String
   },
   setup(props) {
     const tags = ref(props.data)
-    return { tags }
+    const warnMessage = ref(props.warn)
+    return { tags, warnMessage }
   }
 }
 </script>
@@ -45,6 +48,12 @@ export default {
     &:not(:last-child) {
       margin-right: 5px;
     }
+  }
+  .warn-text {
+    text-align: center;
+    margin: auto;
+    font-size: 10px;
+    color: #999;
   }
 }
 </style>

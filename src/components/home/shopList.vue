@@ -16,7 +16,6 @@
 
 <script>
 import { ref, reactive, onMounted, onActivated, onDeactivated } from 'vue'
-import { useRouter } from 'vue-router'
 import { getShop } from '@/utils/axios'
 import { touchBottom } from '@/utils/scroll'
 import Card from '@/components/common/shopCard.vue'
@@ -27,7 +26,6 @@ export default {
     LoadingStatus,
   },
   setup() {
-    const router = useRouter()
     const state = reactive({
       loading: -2, // 1显示加载，2不显示，3显示到底，-1显示加载失败
       value1: 0,
@@ -51,15 +49,6 @@ export default {
           }
         })
       }
-    }
-    const gotoShop = (e) => {
-      e = JSON.stringify(e)
-      router.push({
-        path: '/shop',
-        query: {
-          shop: e
-        }
-      })
     }
     const option1 = [{ 
       text: '全部商品', value: 0
@@ -109,7 +98,6 @@ export default {
       option1,
       option2,
       list,
-      gotoShop,
     };
   },
 }

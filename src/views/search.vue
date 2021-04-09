@@ -5,15 +5,26 @@
       <div id="search">
         <van-field
           v-model="value"
-          right-icon="search"
           autofocus
-          @update:model-value="search"
-        />
+          @update:model-value="search(0)"
+        >
+          <template #button>
+            <van-button
+              round
+              size="small"
+              type="primary"
+              @click="search(1)"
+            >
+              搜索
+            </van-button>
+          </template>
+        </van-field>
       </div>
     </div>
     <div class="before-search">
       <div class="title">历史搜索</div>
-      <search-tags :data="tags"></search-tags>
+      <search-tags :data="tags" warn="无搜索记录"></search-tags>
+      <loading-status :data="load"></loading-status>
     </div>
     <div class="after-search">
 
@@ -23,54 +34,42 @@
 
 <script>
 import searchTags from '@/components/common/searchTags'
-import { debounce } from '@/utils/throttle'
+import loadingStatus from '@/components/common/loadingStatus'
 import { ref } from 'vue'
 export default {
   components: {
-    searchTags
+    searchTags,
+    loadingStatus
   },
   setup() {
     const value = ref('')
-    const tags = ref([{
-      id: 1,
-      content: "定节日鲜花"
-    },{
-      id: 2,
-      content: "百亿补贴"
-    },{
-      id: 3,
-      content: "汉堡"
-    },{
-      id: 4,
-      content: "奶茶"
-    },{
-      id: 5,
-      content: "黄焖鸡"
-    },{
-      id: 6,
-      content: "蛋糕"
-    },{
-      id: 7,
-      content: "烧烤"
-    },{
-      id: 8,
-      content: "小龙虾"
-    },{
-      id: 9,
-      content: "鸡架"
-    }])
+    const load = ref(null)
+    const tags = ref(JSON.parse(localStorage.getItem('searchHistory')) || [])
     let timer = null
-    const search = () => {
+    const search = tag => {
+      load.value = 1
       if(timer) {
         clearTimeout(timer)
       }
-      timer = setTimeout(() => {return}, 1000)
+      timer = setTimeout(() => {
+        const key = value.value
+        if(key.length) {
+          console.log(key)
+          if(tag) {
+            tags.value = tags.value.filter(e => e != key)
+            tags.value.unshift({content: key})
+            if(tags.value.length > 20) tags.value.pop()
+            localStorage.setItem('searchHistory', JSON.stringify(tags.value))
+          }
+        }
+        load.value = null
+      }, 1000)
     }
     return {
       value,
+      load,
       tags,
       search,
-      debounce
     }
   },
   methods: {
@@ -95,6 +94,7 @@ export default {
       .van-cell {
         border-radius: 30px;
         background: #f7f7f7;
+        padding: 5px 8px;
       }
     }
   }
