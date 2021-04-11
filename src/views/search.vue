@@ -23,7 +23,7 @@
     </div>
     <div class="before-search" v-if="step == 1">
       <div class="title">历史搜索</div>
-      <search-tags :data="tags" warn="无搜索记录"></search-tags>
+      <search-tags :data="tags" warn="无搜索记录" @tagClick="tagClick"></search-tags>
     </div>
     <loading-status :data="load"></loading-status>
     <div class="after-search" v-if="step == 2">
@@ -38,6 +38,7 @@ import loadingStatus from '@/components/common/loadingStatus'
 import shopCard from '@/components/common/shopCard'
 import { searchShop } from '@/utils/axios'
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 export default {
   components: {
     searchTags,
@@ -45,7 +46,8 @@ export default {
     shopCard
   },
   setup() {
-    const value = ref('')
+    const route = useRoute()
+    const value = ref(route.query.tag || null)
     const load = ref(null)
     const tags = ref(JSON.parse(localStorage.getItem('searchHistory')) || [])
     const step = ref(1)
@@ -77,13 +79,18 @@ export default {
         }
       }, 1000)
     }
+    const tagClick = e => {
+      value.value = e
+      search()
+    }
     return {
       value,
       load,
       tags,
       search,
       step,
-      searchList
+      searchList,
+      tagClick
     }
   },
   methods: {

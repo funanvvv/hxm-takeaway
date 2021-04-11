@@ -2,7 +2,7 @@
   <div class="top-wrap">
     <router-link to="/location" class="location">
       <van-icon name="location-o" />
-      浙江工商大学信电学院
+        {{location}}
       <van-icon name="arrow-down" />
     </router-link>
     <!-- <div class="right">
@@ -12,8 +12,27 @@
 </template>
 
 <script>
+import { onActivated,ref } from 'vue'
+import { getLocation } from '@/utils/axios'
+import { useStore } from 'vuex'
 export default {
-  
+  setup() {
+    const location = ref(null)
+    const store = useStore()
+    onActivated(() => { 
+      getLocation(store.state.phoneNumber).then(res => {
+        for(const i of JSON.parse(res.data[0].address)) {
+          if(i.id == res.data[0].currentAddress) {
+            location.value = i.address
+            break
+          }
+        }
+      })
+    })
+    return {
+      location
+    }
+  }
 }
 </script>
 

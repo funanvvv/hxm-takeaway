@@ -1,6 +1,6 @@
 <template>
   <div class="login-page container">
-    <van-icon name="cross" @click="this.$router.go(-1)" />
+    <van-icon name="cross" @click="this.$router.push({path: '/home'})" />
     <div class="body">
       <p class="title">花小猫</p>
       <div class="tip1">使用本机号码一键登录</div>

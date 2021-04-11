@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '@/router/index'
+import { Toast } from 'vant'
 
 // const base = 'http://test.funanvvv.cn:8088'
 const base = 'http://localhost:8088';
@@ -26,6 +27,7 @@ axios.interceptors.request.use((config) => {
 
 axios.interceptors.response.use((res) => {
   if(res.data.code == 2) {
+    Toast.fail('请先登录')
     router.push({
       path: '/login'
     })
@@ -66,4 +68,13 @@ export const getFood = id => {
 }
 export const searchShop = param => {
   return axios.post(`${base}/shop/searchShop/`, {keyword: param}).then(res => res.data)
+}
+export const getLocation = param => {
+  return axios.get(`${base}/location/getList/?phoneNumber=${param}`).then(res => res.data)
+}
+export const changeLocation = param => {
+  return axios.post(`${base}/location/changeLocation/`, param).then(res => res.data)
+}
+export const changeCurrentLocation = (param1, param2) => {
+  return axios.get(`${base}/location/currentLocation/?phoneNumber=${param1}&index=${param2}`).then(res => res.data)
 }

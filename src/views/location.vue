@@ -18,7 +18,7 @@
         <van-address-edit
           show-search-result
           :show-area="false"
-          @save="onSave"
+          @save="onSaveAdd"
         />
       </div>
     </van-action-sheet>
@@ -29,7 +29,7 @@
           :show-area="false"
           :address-info="initValue"
           show-delete
-          @save="onSave"
+          @save="onSaveEdit"
         />
       </div>
     </van-action-sheet>
@@ -40,33 +40,46 @@
 import { ref, reactive, toRefs } from 'vue'
 import navBar from '@/components/common/navBar'
 import { useRouter } from 'vue-router'
+import { getLocation, changeLocation, changeCurrentLocation } from '@/utils/axios'
+import { useStore } from 'vuex'
+import { Toast } from 'vant'
 export default {
   components: {
     navBar
   },
   setup() {
+    const store = useStore()
     const router = useRouter()
-    const chosenAddressId = ref('8');
-    const list = [
-      {
-        id: '8',
-        name: '富楠',
-        tel: '17376566423',
-        address: '浙江省杭州市浙江工商大学信息与电子工程学院',
-      },
-      {
-        id: '11',
-        name: '富楠',
-        tel: '17376566423',
-        address: '浙江省杭州市萧山区',
-      },
-    ];
+    const chosenAddressId = ref(null)
+    const list = ref(null)
+    const init = () => {
+      getLocation(store.state.phoneNumber).then(res => {
+        if(res.code == 0) {
+          chosenAddressId.value = res.data[0].currentAddress
+          list.value = res.data[0].address ? JSON.parse(res.data[0].address) : []
+        } else if(res.code == 5) {
+          router.push({
+            path: '/login'
+          })
+        }
+      })
+    }
+    init()
     const goBack = () => {
       router.go(-1)
     }
     const change = reactive({
       onSelect: (item, index) => {
-        chosenAddressId.value = index
+        changeCurrentLocation(
+          store.state.phoneNumber,
+          item.id
+        ).then(res => {
+          if(res.code == 0) {
+            chosenAddressId.value = item.id
+          } else {
+            Toast.fail('设置失败！')
+          }
+        })
       },
       showAdd: false,
       showEdit: false,
@@ -75,8 +88,55 @@ export default {
         change.showEdit = !change.showEdit
         change.initValue = e
       },
-      onSave: content => {
-        console.log(content)
+      onSaveAdd: content => {
+        const sub = list.value.slice(0)
+        const id = sub.length ? +sub.slice(0).sort((a,b) => b.id - a.id)[0].id+1 : 1
+        const val = {
+          id: id,
+          name: content.name,
+          tel: content.tel,
+          address: content.addressDetail
+        }
+        sub.push(val)
+        changeLocation({
+          phoneNumber: store.state.phoneNumber,
+          locations: JSON.stringify(sub)
+        }).then(res => {
+          if(res.code == 0) {
+            Toast.success('添加成功')
+            list.value.push(val)
+            change.showAdd = false
+          } else {
+            Toast.fail('添加失败')
+          }
+        })
+      },
+      onSaveEdit: content => {
+        const sub = list.value.slice(0)
+        const id = content.id
+        let index = 0
+        for(;index < list.value.length;index++) {
+          if(list.value[index].id == id) break
+        }
+        const val = {
+          id: id,
+          name: content.name,
+          tel: content.tel,
+          address: content.addressDetail
+        }
+        sub[index] = val
+        changeLocation({
+          phoneNumber: store.state.phoneNumber,
+          locations: JSON.stringify(sub)
+        }).then(res => {
+          if(res.code == 0) {
+            Toast.success('添加成功')
+            list.value[index] = val
+            change.showEdit = false
+          } else {
+            Toast.fail('添加失败')
+          }
+        })
       }
     })
     return {

@@ -2,6 +2,7 @@
   <div class="tags-wrap">
     <div :class="[item.hot ? 'tag-hot' : 'tag-normal']"
       v-for="(item, index) in tags" :key="index" class="tag"
+      @click="onClick(item.content)"
     >
       {{item.content}}
     </div>
@@ -16,10 +17,13 @@ export default {
     data: Array,
     warn: String
   },
-  setup(props) {
+  setup(props, context) {
     const tags = ref(props.data)
     const warnMessage = ref(props.warn)
-    return { tags, warnMessage }
+    const onClick = (e) => {
+      context.emit('tagClick', e)
+    }
+    return { tags, warnMessage, onClick }
   }
 }
 </script>

@@ -14,7 +14,7 @@
             />
           </div>
         </van-sticky>
-        <search-tags :data="tags"></search-tags>
+        <search-tags :data="tags" @tagClick="tagClick"></search-tags>
         <app-carousel></app-carousel>
         <shop-list></shop-list>
       </div>
@@ -47,27 +47,19 @@ export default {
     const tags = ref([{
       hot: true,
       id: 1,
-      content: "定节日鲜花"
+      content: "牛杂"
     },{
-      hot: true,
       id: 2,
-      content: "百亿补贴"
-    },{
-      hot: false,
-      id: 3,
-      content: "汉堡"
-    },{
-      hot: false,
-      id: 4,
-      content: "奶茶"
-    },{
-      hot: false,
-      id: 5,
       content: "黄焖鸡"
     },{
-      hot: false,
-      id: 6,
-      content: "蛋糕"
+      id: 3,
+      content: "口水鸡"
+    },{
+      id: 4,
+      content: "鸡丁"
+    },{
+      id: 5,
+      content: "纸包鸡"
     }])
     const defaultSearch = ref('搜索')
     const gotoSearch = () => {
@@ -86,6 +78,14 @@ export default {
         state.count++;
       }, 1000);
     };
+    const tagClick = (e) => {
+      router.push({
+        path: '/search',
+        query: {
+          tag: e
+        }
+      })
+    }
 
     onActivated(() => {
       window.addEventListener('scroll', dynamicNav)
@@ -101,6 +101,7 @@ export default {
       gotoSearch,
       onRefresh,
       state,
+      tagClick,
     }
   },
 }
