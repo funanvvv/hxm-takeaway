@@ -1,13 +1,13 @@
 <template>
   <div class="top-wrap">
-    <router-link to="/search" class="location">
+    <router-link to="/location" class="location">
       <van-icon name="location-o" />
-      龙驰科创园B幢
+      浙江工商大学信电学院
       <van-icon name="arrow-down" />
     </router-link>
-    <div class="right">
+    <!-- <div class="right">
       <van-icon name="comment-circle-o" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -24,9 +24,9 @@ export default {
   .location {
     color: #fff;
   }
-  .right {
-    float: right;
-  }
+  // .right {
+  //   float: right;
+  // }
 }
 </style>
 <style lang="scss">
