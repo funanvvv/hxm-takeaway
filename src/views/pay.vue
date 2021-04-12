@@ -77,7 +77,7 @@ export default {
     const chosenLocation = ref({
       address: ''
     })
-    getLocation(store.state.phoneNumber).then(res => {
+    getLocation(store.state.id).then(res => {
       if(res.code == 0) {
         location.value = JSON.parse(res.data[0].address)
         current.value = res.data[0].currentAddress
@@ -101,7 +101,7 @@ export default {
         })
       }
       const orderDetail = {
-        user: store.state.phoneNumber,
+        user: store.state.id,
         shop: JSON.parse(route.query.shop).id,
         food: JSON.stringify(food)
       }

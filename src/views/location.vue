@@ -53,7 +53,7 @@ export default {
     const chosenAddressId = ref(null)
     const list = ref(null)
     const init = () => {
-      getLocation(store.state.phoneNumber).then(res => {
+      getLocation(store.state.id).then(res => {
         if(res.code == 0) {
           chosenAddressId.value = res.data[0].currentAddress
           list.value = res.data[0].address ? JSON.parse(res.data[0].address) : []
@@ -71,7 +71,7 @@ export default {
     const change = reactive({
       onSelect: (item) => {
         changeCurrentLocation(
-          store.state.phoneNumber,
+          store.state.id,
           item.id
         ).then(res => {
           if(res.code == 0) {
@@ -99,7 +99,7 @@ export default {
         }
         sub.push(val)
         changeLocation({
-          phoneNumber: store.state.phoneNumber,
+          phoneNumber: store.state.id,
           locations: JSON.stringify(sub)
         }).then(res => {
           if(res.code == 0) {

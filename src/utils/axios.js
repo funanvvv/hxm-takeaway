@@ -73,13 +73,13 @@ export const searchShop = param => {
   return axios.post(`${base}/shop/searchShop/`, {keyword: param}).then(res => res.data)
 }
 export const getLocation = param => {
-  return axios.get(`${base}/location/getList/?phoneNumber=${param}`).then(res => res.data)
+  return axios.get(`${base}/location/getList/?id=${param}`).then(res => res.data)
 }
 export const changeLocation = param => {
   return axios.post(`${base}/location/changeLocation/`, param).then(res => res.data)
 }
 export const changeCurrentLocation = (param1, param2) => {
-  return axios.get(`${base}/location/currentLocation/?phoneNumber=${param1}&index=${param2}`).then(res => res.data)
+  return axios.get(`${base}/location/currentLocation/?id=${param1}&index=${param2}`).then(res => res.data)
 }
 export const addOrder = param => {
   return axios.post(`${base}/order/addOrder/`, param).then(res => res.data)

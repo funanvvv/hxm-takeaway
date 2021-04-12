@@ -20,7 +20,7 @@ export default {
     const location = ref('登录后选择地址')
     const store = useStore()
     onActivated(() => { 
-      getLocation(store.state.phoneNumber).then(res => {
+      getLocation(store.state.id).then(res => {
         if(res.code == 0 && res.data.length) {
           for(const i of JSON.parse(res.data[0].address)) {
             if(i.id == res.data[0].currentAddress) {
