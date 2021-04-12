@@ -16,7 +16,7 @@
       <div class="shop-main-bar">
         <div class="shop-basic-info">
           <div class="basic-left">
-            <div class="title">{{shop.title}}</div>
+            <div class="title">{{shop.name}}</div>
             <div class="shop-score-sales">
               <span class="emphasize">{{shop.score}}</span>
               <span>月销{{shop.sales}}</span>
@@ -26,7 +26,7 @@
             width="60"
             height="60"
             fit="cover"
-            src="https://img.yzcdn.cn/vant/cat.jpeg"
+            :src="shop.avatarSrc"
           />
         </div>
         <!-- <div class="shop-discount-notice">
@@ -57,13 +57,22 @@
           </van-tabs>
         </div>
       </div>
-      <van-submit-bar
-        :price="3050"
-        button-text="提交订单"
-        @submit="onSubmit"
-        v-show="active1==0"
-      />
+      <div class="submit">
+        <div style="display: flex;">
+          <van-icon name="cart-circle" :badge="list.reduce((a, b) => a+b.count, 0)"/>
+          <div class="price">
+            <span style="font-size:14px">￥</span>
+            <span style="font-size:18px">{{list.reduce((a, b) => b.count == 0 ? a : a+b.count*b.price, 0).toFixed(2)}}</span>
+          </div>
+        </div>
+        <div>
+          <van-button @click="onSubmit" size="small" color="linear-gradient(to bottom right, #666, #222)">
+            去结算
+          </van-button>
+        </div>
+      </div>
     </div>
+
   </div>
 </template>
 
@@ -72,9 +81,9 @@ import { ref, onMounted, reactive, toRefs, provide } from 'vue'
 import foodList from '@/components/shop/foodList.vue'
 import foodSide from '@/components/shop/foodSide.vue'
 import navBar from '@/components/common/navBar'
-import { useRoute } from 'vue-router'
-import { getClass, getFood } from '@/utils/axios'
-
+import { useRoute, useRouter } from 'vue-router'
+import { changeLocation, getClass, getFood } from '@/utils/axios'
+import {Toast} from 'vant'
 export default {
   components: {
     foodList,
@@ -83,6 +92,7 @@ export default {
   },
   setup() {
     const route = useRoute()
+    const router = useRouter()
     const shop = ref(JSON.parse(route.query.shop))
     const active = reactive({
       active1: 0,
@@ -113,9 +123,18 @@ export default {
       }
     }
     const onSubmit = () => {
-      return
+      if(!changeList.list.filter(a => a.count > 0).length) {
+        Toast.fail('购物篮空空如也')
+        return
+      }
+      router.push({
+        path: '/pay',
+        query: {
+          shop: JSON.stringify(shop.value),
+          food: JSON.stringify(changeList.list.filter(a => a.count > 0))
+        }
+      })
     }
-
     onMounted(() => {
       window.scrollTo(0, 0)
       getClass(shop.value.id).then((res) => {
@@ -123,12 +142,11 @@ export default {
         changeList.index = res.data[0].id
       })
       getFood(shop.value.id).then((res) => {
+        res.data.map(a => a.count = 0)
         changeList.list = res.data
       })
     })
-
     provide('list', changeList)
-
     return {
       shop,
       active,
@@ -245,6 +263,33 @@ export default {
         .van-tab__pane-wrapper--inactive {
           min-height: calc(100vh - 136px);
         }
+      }
+    }
+    .submit {
+      border-top: .5px solid #eee;
+      width: 100%;
+      height: 45px;
+      position: fixed;
+      bottom: 0;
+      padding: 5px 12px;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      box-sizing: border-box;
+      .price {
+        line-height: 45px;
+        padding-left: 10px;
+      }
+      .van-icon {
+        font-size: 37px;
+        color: #555;
+      }
+      .van-badge {
+        top: 7px;
+        right: 5px;
+      }
+      .van-button--small {
+        padding: 0 20px;
       }
     }
   }

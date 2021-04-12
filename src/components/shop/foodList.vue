@@ -6,20 +6,29 @@
     >
       <div class="shop-food-item" v-if="item.cid==list.index">
         <van-image
-          width="5rem"
-          height="5rem"
+          width="80px"
+          height="80px"
           radius="4px"
           fit="cover"
           src="https://img.yzcdn.cn/vant/cat.jpeg"
         />
         <div class="item-right">
           <div style="font-weight: 600; font-size: 14px">{{item.name}}</div>
+          <div style="font-weight: 400; font-size: 10px; color:#999">{{item.describe}}</div>
           <div style="display:flex;justify-content:space-between">
             <div style="color:red">
               <span style="font-size:12px">￥</span>
-              <span style="font-size:18px">4</span>
+              <span style="font-size:18px">{{item.price}}</span>
             </div>
-            <van-icon name="add" />
+            <van-stepper
+              v-model="item.count"
+              theme="round"
+              button-size="20"
+              disable-input
+              min="0"
+              :show-minus="Boolean(item.count)"
+              :show-input="Boolean(item.count)"
+            />
           </div>
         </div>
       </div>
@@ -60,9 +69,13 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      .van-icon {
-        font-size: 20px;
+      width: calc(100% - 80px);
+      .van-stepper--round .van-stepper__plus {
+        background-color: #555;
+      }
+      .van-stepper--round .van-stepper__minus {
         color: #555;
+        border-color: #555;
       }
     }
   }

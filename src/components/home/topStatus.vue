@@ -17,14 +17,16 @@ import { getLocation } from '@/utils/axios'
 import { useStore } from 'vuex'
 export default {
   setup() {
-    const location = ref(null)
+    const location = ref('登录后选择地址')
     const store = useStore()
     onActivated(() => { 
       getLocation(store.state.phoneNumber).then(res => {
-        for(const i of JSON.parse(res.data[0].address)) {
-          if(i.id == res.data[0].currentAddress) {
-            location.value = i.address
-            break
+        if(res.code == 0) {
+          for(const i of JSON.parse(res.data[0].address)) {
+            if(i.id == res.data[0].currentAddress) {
+              location.value = i.address
+              break
+            }
           }
         }
       })

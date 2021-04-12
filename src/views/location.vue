@@ -69,7 +69,7 @@ export default {
       router.go(-1)
     }
     const change = reactive({
-      onSelect: (item, index) => {
+      onSelect: (item) => {
         changeCurrentLocation(
           store.state.phoneNumber,
           item.id

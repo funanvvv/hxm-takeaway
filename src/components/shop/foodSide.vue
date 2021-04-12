@@ -34,6 +34,7 @@ export default {
   .side-item {
     text-align: center;
     padding: 20px 0;
+    background: #ffff;
     &.selected {
       background: #f7f7f7;
     }

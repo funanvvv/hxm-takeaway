@@ -78,3 +78,9 @@ export const changeLocation = param => {
 export const changeCurrentLocation = (param1, param2) => {
   return axios.get(`${base}/location/currentLocation/?phoneNumber=${param1}&index=${param2}`).then(res => res.data)
 }
+export const addOrder = param => {
+  return axios.post(`${base}/order/addOrder/`, param).then(res => res.data)
+}
+export const getOrder = param => {
+  return axios.get(`${base}/order/getOrder/?phoneNumber=${param}`).then(res => res.data)
+}

@@ -13,6 +13,7 @@ const routes: Array<RouteRecordRaw> = [
   {path: '/login',name: 'Login',component: () => import(/* webpackChunkName: "shop" */ '../views/login.vue')},
   {path: '/error',name: 'Error',component: () => import(/* webpackChunkName: "shop" */ '../views/error.vue')},
   {path: '/location',name: 'Location',component: () => import(/* webpackChunkName: "location" */ '../views/location.vue')},
+  {path: '/pay',name: 'Pay',component: () => import(/* webpackChunkName: "pay" */ '../views/pay.vue')},
 ]
 
 const router = createRouter({
