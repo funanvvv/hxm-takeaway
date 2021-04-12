@@ -113,11 +113,12 @@ export default {
   font-size: 18px;
   font-weight: bold;
   padding: 10px 20px;
+  padding-top: 0;
   background: #f7f7f7;
   transition: .3s;
 }
 .shop-list-wrap {
-  min-height: 300px;
+  min-height: calc(100vh - 350px);
 }
 </style>
 <style lang="scss">

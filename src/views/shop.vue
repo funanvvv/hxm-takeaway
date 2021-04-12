@@ -72,7 +72,11 @@
         </div>
       </div>
     </div>
-
+    <van-overlay lock-scroll :show="loadShop" duration="0" z-index="98">
+      <div class="wrapper" @click.stop>
+        <van-loading color="#555" />
+      </div>
+    </van-overlay>
   </div>
 </template>
 
@@ -82,7 +86,7 @@ import foodList from '@/components/shop/foodList.vue'
 import foodSide from '@/components/shop/foodSide.vue'
 import navBar from '@/components/common/navBar'
 import { useRoute, useRouter } from 'vue-router'
-import { changeLocation, getClass, getFood } from '@/utils/axios'
+import { getClass, getFood } from '@/utils/axios'
 import {Toast} from 'vant'
 export default {
   components: {
@@ -93,6 +97,7 @@ export default {
   setup() {
     const route = useRoute()
     const router = useRouter()
+    const loadShop = ref(true)
     const shop = ref(JSON.parse(route.query.shop))
     const active = reactive({
       active1: 0,
@@ -142,12 +147,18 @@ export default {
         changeList.index = res.data[0].id
       })
       getFood(shop.value.id).then((res) => {
-        res.data.map(a => a.count = 0)
-        changeList.list = res.data
+        if(res.code == 0) {
+          res.data.map(a => a.count = 0)
+          changeList.list = res.data
+          loadShop.value = false
+        } else {
+          Toast.fail('加载失败T_T')
+        }
       })
     })
     provide('list', changeList)
     return {
+      loadShop,
       shop,
       active,
       offsetTop,
@@ -292,6 +303,18 @@ export default {
         padding: 0 20px;
       }
     }
+  }
+  .van-overlay {
+    background: white;
+    .wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+  }
+  .van-sticky {
+    z-index: 95!important;
   }
 }
 </style>

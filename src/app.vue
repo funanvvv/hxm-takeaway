@@ -25,16 +25,16 @@ export default {
 
     onMounted(() => {
       if(document.cookie) {
-        let cookiePhone
+        let cookieId
         let cookieToken
         try {
-          cookiePhone = document.cookie.split("phoneNumber")[1].split(";")[0].split("=")[1]
+          cookieId = document.cookie.split("id")[1].split(";")[0].split("=")[1]
           cookieToken = document.cookie.split("token")[1].split(";")[0].split("=")[1]
         } catch(e) {
           return
         }
-        if(cookiePhone) {
-          store.commit('SET_USER_PHONE', cookiePhone)
+        if(cookieId) {
+          store.commit('SET_USER_ID', cookieId)
           store.commit('SET_USER_TOKEN', cookieToken)
         }
       }

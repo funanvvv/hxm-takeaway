@@ -3,14 +3,14 @@
     <div class="swiper-wrapper">
       <div class="swiper-slide" v-for="(item, index) in list" :key="index">
         <div class="inner-slide" v-for="(item2, index2) in item" :key="index2">
-          <div class="item-round" @click="routeChange(index, index2)">
+          <div class="item-round" @click="this.$router.push({path: '/search', query:{tag: item2.name}})">
             <img width="25" height="25" :src="item2.src">
           </div>
           <div class="item-name">{{item2.name}}</div>
         </div>
       </div>
     </div>
-    <div class="swiper-pagination"></div>
+    <!-- <div class="swiper-pagination"></div> -->
   </div>
 </template>
 
@@ -18,20 +18,20 @@
 import { onMounted, ref } from 'vue'
 import Swiper from 'swiper'
 export default {
-  setup() {
+  setup(props, context) {
     const base = 'http://test.funanvvv.cn/bing/home-icon/'
     const list = ref([[{
       id: 1,
-      src: base + '螃蟹.png',
-      name: '海鲜'
+      src: base + '蛋糕.png',
+      name: '面包蛋糕'
     },{
       id: 2,
       src: base + '食物.png',
       name: '简餐'
     },{
       id: 3,
-      src: base + '饮品.png',
-      name: '甜品饮品'
+      src: base + '奶茶.png',
+      name: '奶茶果汁'
     },{
       id: 4,
       src: base + '苹果.png',
@@ -46,8 +46,8 @@ export default {
       name: '米粉面馆'
     },{
       id: 7,
-      src: base + '沙拉.png',
-      name: '轻食沙拉'
+      src: base + '炸鸡.png',
+      name: '炸鸡炸串'
     },{
       id: 8,
       src: base + '寿司.png',
@@ -58,16 +58,9 @@ export default {
       name: '能量西餐'
     },{
       id: 10,
-      src: base + '全部.png',
-      name: '全部分类'
-    }],[{
-      id:2.1
-    },{
-      id:2.2
+      src: base + '麻辣烫.png',
+      name: '麻辣烫'
     }]])
-    const routeChange = () => {
-      return
-    }
     onMounted(() => {
       new Swiper('.home-swiper-container', {
         loop: false,// 循环模式选项 
@@ -76,7 +69,7 @@ export default {
         },
       })
     })
-    return { list, routeChange }
+    return { list }
   }
 }
 </script>
@@ -84,7 +77,7 @@ export default {
 <style lang="scss">
 .home-swiper-container {
   height: 140px;
-  padding: 10px 0;
+  padding-top: 10px;
   .swiper-slide {
     display: grid;
     grid-template: 1fr 1fr / 1fr 1fr 1fr 1fr 1fr;

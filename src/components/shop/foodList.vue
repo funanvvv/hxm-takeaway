@@ -10,11 +10,11 @@
           height="80px"
           radius="4px"
           fit="cover"
-          src="https://img.yzcdn.cn/vant/cat.jpeg"
+          :src="item.avatarSrc || 'https://img.yzcdn.cn/vant/cat.jpeg'"
         />
         <div class="item-right">
-          <div style="font-weight: 600; font-size: 14px">{{item.name}}</div>
-          <div style="font-weight: 400; font-size: 10px; color:#999">{{item.describe}}</div>
+          <div style="font-weight: 600; font-size: 14px;overflow:hidden;white-space: nowrap;text-overflow:ellipsis">{{item.name}}</div>
+          <div style="font-weight: 400; font-size: 10px; color:#999;overflow:hidden;-webkit-line-clamp:2;text-overflow: ellipsis;display: -webkit-box;-webkit-box-orient: vertical;">{{item.describe}}</div>
           <div style="display:flex;justify-content:space-between">
             <div style="color:red">
               <span style="font-size:12px">￥</span>
@@ -42,6 +42,7 @@ export default {
   setup() {
     const list = inject('list')
     onMounted(() => {
+      console.log(list.list)
       return
     })
     return {
@@ -69,7 +70,7 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: calc(100% - 80px);
+      width: calc(100% - 83px);
       .van-stepper--round .van-stepper__plus {
         background-color: #555;
       }

@@ -10,17 +10,17 @@
       />
       <div class="basic-info-right">
         <div>
-          <span v-if="!phone" @click="this.$router.push({path: '/login'})">请登录</span>
-          <span v-if="phone">{{phone}}</span>
-          <div class="basic-info-icon">
+          <span v-if="!name" @click="this.$router.push({path: '/login'})">请登录</span>
+          <span v-if="name">{{name}}</span>
+          <!-- <div class="basic-info-icon">
             <van-icon name="setting-o" />
             <van-icon name="comment-circle-o" />
-          </div>
+          </div> -->
         </div>
         <div>填满了肚子，人就不会空虚</div>
       </div>
     </div>
-    <van-button @click="testToken">token状态测试</van-button>
+    <!-- <van-button @click="testToken">token状态测试</van-button> -->
   </div>
 </template>
 
@@ -39,26 +39,20 @@ export default {
     const url = ref('https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png')
     const store = useStore()
     const router = useRouter()
-    const phone = ref(store.state.phoneNumber)
+    const name = ref(store.state.id)
     const testToken = () => {
       test().then((res) => {
         if(res.code == '5') {
-          Toast.fail(res.msg)
-          if(res.msg.indexOf('点击') == -1) {
-            router.push({
-              path: '/login'
-            })
-          }
-        } else {
-          Toast.success(res.msg)
+          document.cookie = "phoneNumber=;expires=0"
+          document.cookie = "token=;expires=0"
         }
       })
     }
+    testToken()
 
     return {
       url,
-      phone,
-      testToken,
+      name,
     }
   }
 }

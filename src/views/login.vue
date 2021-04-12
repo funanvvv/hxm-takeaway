@@ -39,7 +39,7 @@
 
 <script>
 import { reactive, ref, toRefs, watch } from 'vue'
-import { getVerifyCode, checkVerifyCode } from '@/utils/axios'
+import { getVerifyCode, checkVerifyCode, getUser } from '@/utils/axios'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { Toast } from 'vant'
@@ -104,14 +104,20 @@ export default {
         }).then((res) => {
           if(res.code == '0') {
             Toast.success(res.msg)
-            const d = new Date();
-            d.setTime(d.getTime()+(7*24*60*60*1000));
-            const expires = 'expires='+d.toGMTString();
-            document.cookie = 'phoneNumber='+ verify.phoneNumber + ';' + expires
-            document.cookie = 'token=' + res.data.token + ';' + expires
-            store.commit('SET_USER_PHONE', verify.phoneNumber)
-            store.commit('SET_USER_TOKEN', res.data.token)
-            router.go(-1)
+            getUser(verify.phoneNumber).then(r => {
+              if(r.code == 0 && r.data.length) {
+                const d = new Date();
+                d.setTime(d.getTime()+(7*24*60*60*1000));
+                const expires = 'expires='+d.toGMTString();
+                document.cookie = 'id='+ r.data[0].id + ';' + expires
+                document.cookie = 'token=' + res.data.token + ';' + expires
+                store.commit('SET_USER_ID', r.data[0].id)
+                store.commit('SET_USER_TOKEN', res.data.token)
+                router.go(-1)
+              } else {
+                Toast.fail('未知错误，登陆失败！')
+              }
+            })
           } else if(res.code == '2') {
             Toast.fail(res.msg)
             step.value = 'phone'
@@ -186,6 +192,8 @@ export default {
       font-size: 12px;
       border-radius: 20px;
       height: 35px;
+      background: #444;
+      border-color: #444;
     }
     .button2 {
       background: #fafafa;

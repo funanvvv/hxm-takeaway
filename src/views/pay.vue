@@ -95,7 +95,9 @@ export default {
       for(const i of JSON.parse(route.query.food)) {
         food.push({
           id: i.id,
-          name: i.name
+          name: i.name,
+          avatarSrc: i.avatarSrc,
+          price: i.price
         })
       }
       const orderDetail = {

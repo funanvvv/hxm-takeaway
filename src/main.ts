@@ -15,7 +15,7 @@ import {
   Toast, Button,
   SubmitBar, Loading,
   AddressList, ActionSheet,
-  AddressEdit, Stepper
+  AddressEdit, Stepper, Overlay
 } from 'vant';
 
 createApp(App)
@@ -27,5 +27,5 @@ createApp(App)
   .use(Field).use(Lazyload, {lazyComponent: true})
   .use(Button).use(PasswordInput).use(NumberKeyboard)
   .use(Toast).use(SubmitBar).use(Loading).use(AddressList)
-  .use(ActionSheet).use(AddressEdit).use(Stepper)
+  .use(ActionSheet).use(AddressEdit).use(Stepper).use(Overlay)
   .mount('#app')

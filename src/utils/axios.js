@@ -57,6 +57,9 @@ export const checkVerifyCode = param => {
 export const test = param => {
   return axios.post(`${base}/sms/test`, param).then(res => res.data)
 }
+export const getUser = param => {
+  return axios.get(`${base}/user/getUser/?tel=${param}`).then(res => res.data)
+}
 export const getShop = param => {
   return axios.get(`${base}/shop/getList/?num=${param}`).then(res => res.data)
 }
@@ -82,5 +85,5 @@ export const addOrder = param => {
   return axios.post(`${base}/order/addOrder/`, param).then(res => res.data)
 }
 export const getOrder = param => {
-  return axios.get(`${base}/order/getOrder/?phoneNumber=${param}`).then(res => res.data)
+  return axios.get(`${base}/order/getOrder/?id=${param}`).then(res => res.data)
 }

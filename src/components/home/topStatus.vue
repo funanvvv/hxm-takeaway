@@ -21,7 +21,7 @@ export default {
     const store = useStore()
     onActivated(() => { 
       getLocation(store.state.phoneNumber).then(res => {
-        if(res.code == 0) {
+        if(res.code == 0 && res.data.length) {
           for(const i of JSON.parse(res.data[0].address)) {
             if(i.id == res.data[0].currentAddress) {
               location.value = i.address

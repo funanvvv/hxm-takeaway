@@ -79,6 +79,9 @@ export default {
         }
       }, 1000)
     }
+    if(value.value) {
+      search()
+    }
     const tagClick = e => {
       value.value = e
       search()
