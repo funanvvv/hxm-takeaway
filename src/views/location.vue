@@ -3,7 +3,7 @@
   <div class="location-page container">
     <div style="display: flex; align-items:center; padding-left: 10px">
       <van-icon name="cross" @click="goBack" />
-      <div class="title">选择地址</div>
+      <div style="color: #666;padding: 10px 0;padding-left: 10px;">选择地址</div>
     </div>
     <van-address-list
       v-model="chosenAddressId"
@@ -12,6 +12,7 @@
       @edit="onEdit"
       @select="onSelect"
       @add="showAdd = true"
+      default-tag-text="当前"
     />
     <van-action-sheet v-model:show="showAdd" title="添加地址">
       <div class="content">
@@ -52,11 +53,19 @@ export default {
     const router = useRouter()
     const chosenAddressId = ref(null)
     const list = ref(null)
+    const reDefine = (e) => {
+      for(const i in list.value) {
+        if(list.value[i].id == chosenAddressId.value) {
+          list.value[i].isDefault = e;break
+        }
+      }
+    }
     const init = () => {
       getLocation(store.state.id).then(res => {
         if(res.code == 0) {
           chosenAddressId.value = res.data[0].currentAddress
           list.value = res.data[0].address ? JSON.parse(res.data[0].address) : []
+          reDefine(true)
         } else if(res.code == 5) {
           router.push({
             path: '/login'
@@ -70,6 +79,9 @@ export default {
     }
     const change = reactive({
       onSelect: (item) => {
+        reDefine(false)
+        chosenAddressId.value = item.id
+        reDefine(true)
         changeCurrentLocation(
           store.state.id,
           item.id
@@ -99,7 +111,7 @@ export default {
         }
         sub.push(val)
         changeLocation({
-          phoneNumber: store.state.id,
+          id: store.state.id,
           locations: JSON.stringify(sub)
         }).then(res => {
           if(res.code == 0) {
@@ -126,7 +138,7 @@ export default {
         }
         sub[index] = val
         changeLocation({
-          phoneNumber: store.state.phoneNumber,
+          id: store.state.id,
           locations: JSON.stringify(sub)
         }).then(res => {
           if(res.code == 0) {
@@ -154,11 +166,6 @@ export default {
   padding-top: 40px;
   min-height: calc(100vh - 40px);
   background: white;
-  .title {
-    color: #666;
-    padding: 10px 0;
-    padding-left: 10px;
-  }
   .content {
     padding: 10px;
   }

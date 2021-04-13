@@ -14,6 +14,7 @@ const routes: Array<RouteRecordRaw> = [
   {path: '/error',name: 'Error',component: () => import(/* webpackChunkName: "shop" */ '../views/error.vue')},
   {path: '/location',name: 'Location',component: () => import(/* webpackChunkName: "location" */ '../views/location.vue')},
   {path: '/pay',name: 'Pay',component: () => import(/* webpackChunkName: "pay" */ '../views/pay.vue')},
+  {path: '/edit',name: 'Edit',component: () => import(/* webpackChunkName: "pay" */ '../views/edit.vue')},
 ]
 
 const router = createRouter({

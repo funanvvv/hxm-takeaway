@@ -11,7 +11,7 @@
       <div class="basic-info-right">
         <div>
           <span v-if="!name" @click="this.$router.push({path: '/login'})">请登录</span>
-          <span v-if="name">{{name}}</span>
+          <span v-if="name" @click="this.$router.push({path: '/edit'})">用户{{name}}</span>
           <!-- <div class="basic-info-icon">
             <van-icon name="setting-o" />
             <van-icon name="comment-circle-o" />
